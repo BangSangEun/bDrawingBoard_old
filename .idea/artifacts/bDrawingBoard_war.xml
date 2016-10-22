@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="bDrawingBoard:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="bDrawingBoard.war">
+      <element id="artifact" artifact-name="bDrawingBoard:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -4,76 +4,130 @@
 define([],
     function() {
         var Tool = function() {
-            this.current = null;
+            /**
+             * 캔바스 관련 변수
+             */
+            var self = this,
+                _mouseDown = false,
+                _current = null,
+                _pen = new Pen();
 
-            this.init = function(current, pen) {
-                this.current = current;
-                this.pen = pen;
+/*
+            this.init = function(mouseDown, current, pen) {
+                _mouseDown = mouseDown;
+                _current = current;
+                _pen = pen;
+            }
+*/
+
+            this.getCanvas = function() {
+                return document.getElementById("drawing-canvas");
+            }
+
+            this.getContext = function() {
+                return self.getCanvas().getContext("2d");
+            }
+
+            this.getMouseDown = function() {
+                return _mouseDown;
+            }
+
+            this.setMouseDown = function(mouseDown) {
+                _mouseDown = mouseDown;
             }
 
             this.getCurrent = function() {
-                return this.current;
+                return _current;
             }
 
             this.setCurrent = function(current) {
-                this.current = current;
+                _current = current;
             }
 
-            this.pen = function() {
-                var size,
-                    color,
-                    brush,
-                    oldPoint,
-                    newPoint;
+            this.getColorArr = function() {
+                var colorArr = [ //색상표
+                    '#000000',
+                    '#CCCCCC',
+                    '#FFFFFF',
+                    '#ff0000',
+                    '#FF7F00',
+                    '#FFFF00',
+                    '#009900',
+                    '#082567',
+                    '#8000FF',
+                    '#FF7493',
+                    '#abeda6',
+                    '#b4dec1',
+                    '#CD426B'
+                ];
+                return colorArr;
+            }
 
-                this.init = function(size, color, brush, oldPoint, newPoint) {
-                    this.size = size;
-                    this.color = color;
-                    this.brush = brush;
-                    this.oldPoint = oldPoint;
-                    this.newPoint = newPoint;
+            this.getPen = function() {
+                return _pen;
+            }
+
+            this.setPen = function(pen) {
+                _pen = pen;
+            }
+        };
+
+        var Pen = function() {
+            var _size = null,
+                _color = null,
+                _brush = null,
+                _oldPoint = {x: null, y: null},
+                _newPoint = {x: null, y: null};
+
+            this.getSize = function() {
+                return _size;
+            }
+
+            this.setSize = function(size) {
+                _size = size;
+            }
+
+            this.getColor = function() {
+                return _color;
+            }
+
+            this.setColor = function(color) {
+                _color = color;
+            }
+
+            this.getBrush = function() {
+                return _brush;
+            }
+
+            this.setBrush = function(brush) {
+                _brush = brush;
+            }
+
+            this.getOldPoint = function() {
+                return _oldPoint;
+            }
+
+            this.setOldPoint = function(event) {
+                if(event == null) {
+                    _oldPoint.x = arguments[1].x;
+                    _oldPoint.y = arguments[1].y;
+                }else {
+                    _oldPoint.x = event.offsetX - $(event.target).position().left;
+                    _oldPoint.y = event.offsetY - $(event.target).position().top;
                 }
+            }
 
-                this.getSize = function() {
-                    return this.size;
-                }
+            this.getNewPoint = function() {
+                return _newPoint;
+            }
 
-                this.setSize = function(size) {
-                    this.size = size;
-                }
-
-                this.getColor = function() {
-                    return this.color;
-                }
-
-                this.setColor = function(color) {
-                    this.color = color;
-                }
-
-                this.getBrush = function() {
-                    return this.brush;
-                }
-
-                this.setBrush = function(brush) {
-                    this.brush = brush;
-                }
-
-                this.getOldPoint = function() {
-                    return this.oldPoint;
-                }
-
-                this.setOldPoint = function(event) {
-                    this.oldPoint.x = event.offsetX - event.target.position().left;
-                    this.oldPoint.y = event.offsetY - event.target.position().top;
-                }
-
-                this.getNewPoint = function() {
-                    return this.point;
-                }
-
-                this.setNewPoint = function(event) {
-                    this.newPoint.x = event.offsetX - event.target.position().left;
-                    this.newPoint.y = event.offsetY - event.target.position().top;
+            this.setNewPoint = function(event) {
+                if(event == null) {
+                    _newPoint.x = arguments[1].x;
+                    _newPoint.y = arguments[1].y;
+                }else {
+                    _newPoint.x = event.offsetX - $(event.target).position().left;
+                    _newPoint.y = event.offsetY - $(event.target).position().top;
                 }
             }
         };

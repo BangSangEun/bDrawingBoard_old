@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" type="text/css" href="/css/common.css"/>
+    <script data-main="js/main.js" src="../js/lib/require.js"></script>
+
+    <script type="text/javascript"></script>
+
+    <title>Drawing Board</title>
+</head>
+<body>
+<header id="top-panel">
+    <div class="navi-top">
+        <ul class="navi-top-left"></ul>
+        <ul class="navi-top-right">
+            <li><span id="top-memberInfo"></span>님 안녕하세요.</li>
+            <li><span class="li-menu btn-logout">로그아웃</span></li>
+        </ul>
+    </div>
+    <div class="logo">
+        <a href="/main.do">Drawing Board</a>
+    </div>
+    <div class="navi-menu">
+        <ul class="navi-menu-left">
+            <li id="menu-saveLocal">
+                <i class="tool-ico savelocal-ico"></i> 다운로드
+            </li>
+            <li id="menu-saveFile">
+                <i class="tool-ico savefile-ico"></i> 저장
+            </li>
+            <li id="menu-drawClear">
+                <i class="tool-ico drawclear-ico"></i> 새로그리기
+            </li>
+        </ul>
+        <ul class="navi-menu-right">
+            <li id="menu-myFileList">
+                <i class="tool-ico myfolder-ico"></i> 내 파일목록
+            </li>
+        </ul>
+    </div>
+
+    <!--내 파일 목록 뷰-->
+    <div class="file-list" id="myfile-list" style="display: none;">
+        <div class="div-exit">
+            <span>내 파일 목록</span>
+            <i class="tool-ico exit-ico"></i>
+        </div>
+        <div class="div-list-content">
+            <table>
+                <colgroup>
+                    <col width="65%"/>
+                    <col width="35%"/>
+                </colgroup>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!--내 폴더 목록 뷰-->
+    <div class="file-list" id="file-saveView" style="display:none;">
+        <div class="div-exit">
+            <span>내 파일 저장</span>
+            <i class="tool-ico exit-ico"></i>
+        </div>
+        <!--
+        <div class="filesave-top">
+            <table>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        -->
+        <div class="div-list-content filesave-bottom">
+            <p>
+                파일명 : <input type="text" id="filesave-name" placeholder="파일명을 입력하세요."/>
+                <button class="save-btn">저장</button>
+            </p>
+        </div>
+    </div>
+</header>
+<secssion id="content-panel">
+    <!-- 그림 도구 -->
+    <div class="drawing-tool">
+        <ul>
+            <li id="tool-pencil">
+                <i class="tool-ico pencil-ico"></i> 연필
+            </li>
+            <li id="tool-brush">
+                <i class="tool-ico brush-ico"></i> 브러시
+            </li>
+            <li id="tool-figure">
+                <i class="tool-ico figure-ico"></i> 도형
+            </li>
+            <li id="tool-paint">
+                <i class="tool-ico paint-ico"></i> 채우기
+            </li>
+            <li id="tool-eraser">
+                <i class="tool-ico eraser-ico"></i> 지우개
+            </li>
+            <li id="tool-text">
+                <i class="tool-ico text-ico"></i> 텍스트
+            </li>
+            <li id="tool-selectarea">
+                <i class="tool-ico selectarea-ico"></i> 영역선택
+            </li>
+        </ul>
+    </div>
+    <div class="drawing-board">
+        <canvas id="drawing-canvas" download="drawing-img"></canvas>
+    </div>
+</secssion>
+<footer id="footer-panel">
+    <div class="navi-footer">
+        <div class="pallet-left">
+            <div class="pallet-left additional-tool">
+                <div id="add-brush-tool" style="display:none;">
+                    <ul>
+                        <li id="brush-round">원</li>
+                        <li id="brush-square">네모</li>
+                        <li id="brush-butt">마커</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pallet-right">
+                <div class="penSize-pallet" id="default-penSize">
+                    <ul>
+                        <li id="penSize-1">1</li>
+                        <li id="penSize-2">2</li>
+                        <li id="penSize-3">3</li>
+                        <li id="penSize-4">4</li>
+                    </ul>
+                </div>
+                <div class="penSize-pallet" id="brush-penSize" style="display:none;">
+                    <ul>
+                        <li id="penSize-3">3</li>
+                        <li id="penSize-5">5</li>
+                        <li id="penSize-10">10</li>
+                        <li id="penSize-20">20</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="pallet-right">
+            <div class="color-pallet">
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            @Copyright Bang Sang-eun all right reserved.
+        </div>
+    </div>
+</footer>
+</body>
+</html>

@@ -127,15 +127,21 @@ canvas {display: block; border:1px solid #B8B6B8;}
 .file-list {display: block; width: 350px; height: 400px; border: 3px solid #DCDCDC; background-color: #fff;
     position:fixed; left:50%; top:50%; z-index:101; -webkit-transform:translateX(-50%) translateY(-50%); transform:translateX(-50%) translateY(-50%); max-width:100%;}
 
-.file-list table {width: 100%;}
+.file-list .div-list-content {overflow: auto;}
+
+.file-list table {width: 100%; }
 .file-list table tr {margin: 5px;}
 .file-list table tr.list-root i.folder-plus-ico {margin-right: 2px; width: 16px; height: 16px; background-size: 16px 16px;}
 .file-list table tr.list-root i.myfolder-black-ico {margin-right: 2px; width: 16px; height: 16px; background-size: 16px 16px;}
 .file-list table tr.list-file i.myfile-ico {margin-right: 0px; width: 16px; height: 16px; background-size: 16px 16px;}
 
+
 /*#myfile-list table tr.list-folder 폴더면 원래 mergin-left에서 15 더 빼기*/
 
 .file-list table tr p.list-name {margin: 3px; width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11pt; }
+
+.file-list table tr td#td-folder-root {background-color: #DCDCDC; color: #fff; font-weight: bold;}
+
 .file-list table tr td.on {background-color: #C53163; color: #fff; font-weight: bold;}
 
 .file-list table tr .list-btn {float: right; margin-right: 7px; line-height: 28px;}
@@ -151,11 +157,9 @@ canvas {display: block; border:1px solid #B8B6B8;}
 .file-list#myfile-list .div-exit {background-color: #DCDCDC; color: #333333;}
 .file-list#file-saveView .div-exit {background-color: #333333; color: #fff;}
 
-.file-list#myfile-list {overflow: auto;}
-
-.file-list#file-saveView {border: 3px solid #333333; width: 300px !important; height: 240px;}
-.file-list#file-saveView .filesave-top {height: 170px; background-color: #DCDCDC; overflow: auto;}
-.file-list#file-saveView .filesave-bottom {margin: 10px; font-size: 10pt; }
+.file-list#file-saveView {border: 3px solid #333333; width: 300px !important; height: 70px;}
+/*.file-list#file-saveView .filesave-top {height: 170px; background-color: #DCDCDC; overflow: auto;}*/
+.file-list#file-saveView .filesave-bottom {margin-left: 10px; font-size: 10pt;}
 .file-list#file-saveView .save-btn {width: 50px; line-height: 20px; color: #333333; font-weight: bold; text-align: center; cursor: pointer; border-radius: 3px; border: 1px solid #333333; background-color: #fff;}
 .file-list#file-saveView .save-btn:hover {background-color: #333333; opacity:0.9; color: #fff;}
 .file-list#file-saveView .save-btn:active {background-color: #333333; opacity:0.6; color: #fff;}

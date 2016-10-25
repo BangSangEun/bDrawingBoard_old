@@ -22,38 +22,25 @@ require.config({
 require(['jquery', 'Initializer', 'LoginHandler'],
     function($, Initializer, LoginHandler) {
         $(document).ready(function() {
+            var loginHandler = new LoginHandler();
+            loginHandler.setHandler();
+
             if(location.pathname == '/') {
                 if(localStorage.saveid != undefined) {
                     $('#saveId').attr('checked', true);
                     $('input[name=member_id]').val(localStorage.saveid);
                 }
-
-                var loginHandler = new LoginHandler();
-                loginHandler.setInit();
             }else {
                 //초기화
                 var initializer = new Initializer();
-                initializer.setInit();
+                initializer.init();
                 initializer.eventBinder();
+
+                //로그인 정보 - $.ajax 에서 json 으로 받는 형식과 같음
+                $.getJSON('/login/getMemberInfo.do', function (result) {
+                    $('#top-memberInfo').text(decodeURIComponent(result['memberName']));
+                });
             }
-
-
-
-            var a = [];
-            var b = [1, 2, 3, 4, 5];
-            var c = [1.2, true, 'hancom'];
-            var d = [a, b, c];
-            var e = [{x: 1, y: 2}, {x: 2.4, y: 5.4}];
-            var f = [1, 2,  , 3];
-            var f2 = [1, 2,  , 3, ];
-
-            var g = new Array();
-            var h = new Array(10);
-            var i = new Array(1, 2, 3, 'bang');
-
-            //var temp = ["han", "com"];
-
-
         });
 });
 

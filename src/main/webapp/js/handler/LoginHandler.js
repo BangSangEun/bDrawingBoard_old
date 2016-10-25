@@ -5,24 +5,29 @@
 define(['jquery'],
     function($) {
         var LoginHandler = function() {
+            var self = this;
 
             /**
-             * 초기화 이벤트 바인딩
+             * Login 핸들러
              */
-            this.setInit = function () {
+            this.setHandler = function () {
                 $('.login-btn').bind('click', function (event) {
                     if (event.target.className.indexOf('btn-login') > -1) {
-                        goLogin();
+                        self.goLogin();
                     } else {
-                        goJoin();
+                        self.goJoin();
                     }
+                });
+
+                $('.btn-logout').bind('click', function (event) {
+                    self.goLogout();
                 });
             };
 
             /**
              * 로그인
              */
-            var goLogin = function () {
+            this.goLogin = function () {
                 var vali_obj = ['member_id', 'member_pw'];
                 for (var i = 0; i < vali_obj.length; i++) {
                     var obj = $("input[name=" + vali_obj[i] + "]");
@@ -54,9 +59,16 @@ define(['jquery'],
             };
 
             /**
+             * 로그아웃
+             */
+            this.goLogout = function () {
+                location.href = "/goLogout.do";
+            }
+
+            /**
              * 회원가입 페이지 이동
              */
-            var goJoin = function () {
+            this.goJoin = function () {
                 //회원가입 페이지 이동
             };
         };

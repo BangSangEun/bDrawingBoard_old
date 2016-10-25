@@ -2,7 +2,6 @@ package bDrawingBoard.module.main.service.serviceImpl;
 
 import bDrawingBoard.module.main.dao.MyFileDAO;
 import bDrawingBoard.module.main.service.MyFileService;
-import bDrawingBoard.module.main.vo.FileInfoVO;
 import bDrawingBoard.module.main.vo.MyFileInfoVO;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,6 +13,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,25 +28,20 @@ public class MyFileServiceImpl implements MyFileService {
     MyFileDAO myFileDAO;
 
     @Override
-    public String getMyFileInfoList(String member_id, String file_type) {
+    public String getMyFileInfoList(String member_id) {
         JSONObject resultObj = new JSONObject();
         JSONArray tempArray = new JSONArray();
 
         try {
-            HashMap<String, String> map = new HashMap<String, String>();
-            map.put("member_id", member_id);
-            map.put("file_type", file_type);
-
-            ArrayList<MyFileInfoVO> myFileInfoList = myFileDAO.getMyFileInfoList(map);
+            ArrayList<MyFileInfoVO> myFileInfoList = myFileDAO.getMyFileInfoList(member_id);
 
             for(int i=0; i<myFileInfoList.size(); i++) {
                 JSONObject tempObj = new JSONObject();
-                tempObj.put("id", myFileInfoList.get(i).getId());
-                tempObj.put("file_type", myFileInfoList.get(i).getFile_type());
-                tempObj.put("file_depth", myFileInfoList.get(i).getFile_depth());
-                tempObj.put("file_parent", myFileInfoList.get(i).getFile_parent());
                 tempObj.put("file_id", myFileInfoList.get(i).getFile_id());
-                tempObj.put("file_nicname", myFileInfoList.get(i).getFile_nicname());
+                tempObj.put("member_id", myFileInfoList.get(i).getMember_id());
+                tempObj.put("file_name", URLEncoder.encode(myFileInfoList.get(i).getFile_name(), "UTF-8"));
+                tempObj.put("file_url", myFileInfoList.get(i).getFile_url());
+                tempObj.put("regi_date", myFileInfoList.get(i).getRegi_date());
 
                 tempArray.put(tempObj);
             }
@@ -60,13 +55,11 @@ public class MyFileServiceImpl implements MyFileService {
     }
 
     @Override
-    public String setMyFileInfo(MyFileInfoVO myFileInfoVO, FileInfoVO fileInfoVO) {
+    public String setMyFileInfo(MyFileInfoVO myFileInfoVO) {
         String result = "success";
-        int fileSave = myFileDAO.setFileInfo(fileInfoVO);         //파일 저장
-        myFileInfoVO.setFile_id(fileInfoVO.getFile_id());
         int myfileSave = myFileDAO.setMyFileInfo(myFileInfoVO);  //내 파일 저장
 
-        if(fileSave != 1 || myfileSave != 1) {
+        if(myfileSave != 1) {
             result = "fail";
         }
 
@@ -85,6 +78,7 @@ public class MyFileServiceImpl implements MyFileService {
         return result;
     }
 
+    /* -- 서버에 이미지 파일로 저장하는 코드
     @Override
     public FileInfoVO setFileInfoVO(String file_dir, String save_img) {
         FileInfoVO fileInfoVO = new FileInfoVO();
@@ -118,4 +112,5 @@ public class MyFileServiceImpl implements MyFileService {
 
         return fileInfoVO;
     }
+    */
 }

@@ -4,20 +4,18 @@ package bDrawingBoard.module.main.vo;
  * 내 파일 정보 VO
  */
 public class MyFileInfoVO {
-    private int id;
-    private String member_id;
-    private String file_type;
-    private int file_depth;
-    private int file_parent;
     private int file_id;
-    private String file_nicname;
+    private String member_id;
+    private String file_name;
+    private String file_url;
+    private String regi_date;
 
-    public int getId() {
-        return id;
+    public int getFile_id() {
+        return file_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setFile_id(int file_id) {
+        this.file_id = file_id;
     }
 
     public String getMember_id() {
@@ -28,43 +26,27 @@ public class MyFileInfoVO {
         this.member_id = member_id;
     }
 
-    public String getFile_type() {
-        return file_type;
+    public String getFile_name() {
+        return file_name;
     }
 
-    public void setFile_type(String file_type) {
-        this.file_type = file_type;
+    public void setFile_name(String file_name) {
+        this.file_name = file_name;
     }
 
-    public int getFile_depth() {
-        return file_depth;
+    public String getFile_url() {
+        return file_url;
     }
 
-    public void setFile_depth(int file_depth) {
-        this.file_depth = file_depth;
+    public void setFile_url(String file_url) {
+        this.file_url = file_url;
     }
 
-    public int getFile_parent() {
-        return file_parent;
+    public String getRegi_date() {
+        return regi_date;
     }
 
-    public void setFile_parent(int file_parent) {
-        this.file_parent = file_parent;
-    }
-
-    public int getFile_id() {
-        return file_id;
-    }
-
-    public void setFile_id(int file_id) {
-        this.file_id = file_id;
-    }
-
-    public String getFile_nicname() {
-        return file_nicname;
-    }
-
-    public void setFile_nicname(String file_nicname) {
-        this.file_nicname = file_nicname;
+    public void setRegi_date(String regi_date) {
+        this.regi_date = regi_date;
     }
 }

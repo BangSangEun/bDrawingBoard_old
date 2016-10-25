@@ -8,44 +8,48 @@
  */
 define([], function() {
     var Member = function() {
+        var _memberId = null,
+            _memberPw = null,
+            _memberName = null,
+            _memberEmail = null;
 
         this.init = function(memberId, memberPw, memberName, memberEmail) {
-            this.memberId = memberId;
-            this.memberPw = memberPw;
-            this.memberName = memberName;
-            this.memberEmail = memberEmail;
-        }
+            _memberId = memberId;
+            _memberPw = memberPw;
+            _memberName = memberName;
+            _memberEmail = memberEmail;
+        };
 
         this.getMemberId = function() {
-            return this.memberId;
+            return _memberId;
         };
 
         this.setMemberId = function(memberId) {
-            this.memberId = memberId;
+            _memberId = memberId;
         };
 
         this.getMemberPw = function() {
-            return this.memberPw;
+            return _memberPw;
         };
 
         this.setMemberPw = function(memberPw) {
-            this.memberPw = memberPw;
+            _memberPw = memberPw;
         };
 
         this.getMemberName = function() {
-            return this.memberName;
+            return _memberName;
         };
 
         this.setMemberName = function(memberName) {
-            this.memberName = memberName;
+            _memberName = memberName;
         };
 
         this.getMemberEmail = function() {
-            return this.memberEmail;
+            return _memberEmail;
         };
 
         this.setMemberEmail = function(memberEmail) {
-            this.memberEmail = memberEmail;
+            _memberEmail = memberEmail;
         };
     };
 

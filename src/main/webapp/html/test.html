@@ -3,6 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <script>
+
+/*
+
+        function fn_1() {
+            var temp = "fn_1";
+            console.log(temp);
+            fn_2();
+            fn_3();
+
+            function fn_2() {
+                var temp = "fn_2";
+                console.log(temp);
+                fn_3();
+
+                function fn_3() {
+                    console.log(temp);
+                }
+            }
+        }
+*/
+
+/*
+        function counter() {
+            var temp = 0;
+            return {
+                addCount : function() {
+                    return temp++;
+                },
+                resetCount : function() {
+                    temp = 0;
+                },
+                printCount : function() {
+                    return temp;
+                }
+            }
+        }
+*/
+/*
+
+
+        var temp = 10;
+        console.log(this);
+        function counter() {
+            var temp = 0;
+            console.log(this);
+
+            function addCount() {
+                console.log(this);
+                return temp++;
+            }
+
+            return addCount;
+        }
+
+        var a = counter(), b = counter();
+*/
+
+/*
+
+        var value = {temp: 5};
+        var a = counter();
+        a.call(value);                  //value객체의 temp
+*/
+
+
+/*
+        console.log(this);
+        function counter() {
+            console.log(this);
+
+            this.addCount = function() {
+                console.log(this);
+            }
+        }
+
+        var value = {};
+        counter();
+        var a = new counter();
+        a.addCount();
+        a.addCount.call(value);
+*/
+
+
+        function Person(name, age) {
+            this.getName = function() {
+                return name;
+            };
+            this.getAge = function() {
+                return age;
+            };
+        }
+
+        Person.prototype.printInfo = function() {
+            console.log("name : " + this.getName() + ", age : " + this.getAge());
+        }
+
+        function Employee(name, age, position) {
+            Person.apply(this, arguments);
+            this.getPosition = function() {
+                return position;
+            };
+        }
+
+        Employee.prototype = inherit(Person.prototype);
+
+        extend(Employee.prototype, {
+            constructor: Employee,
+            printInfo: function() {
+                Person.prototype.printInfo.apply(this);
+                console.log("position : " + this.getPosition());
+            }
+        });
+
+        /**
+         * 특정 프로토타입을 상속받는 객체를 생성하는 함수
+         * */
+        function inherit(p) { //prototype객체 인자
+            if(p == null)
+                throw TypeError();
+            //p 객체(프로토타입 객체)를 상속받는 객체를 생성( ECMAScript5 )
+            if(Object.create)
+                return Object.create(p);
+
+            //Object.create() 함수를 사용할수 없는 경우
+            var t = typeof p;
+            if(t !== "object" && t !== "function")
+                throw TypeError();
+            function f() {};
+            f.prototype = p;
+            return new f();
+        }
+
+        /**
+        * p의 열거 가능한 프로퍼티들을
+        * obj의 프로퍼티로 추가하여 반환한다.
+        * */
+        function extend(obj, p) {
+            for(prop in p) {
+                obj[prop] = p[prop];
+            }
+            return obj;
+        }
+
+        //B프로토타입 객체는 A프로토타입 객체를 상속
+        //B.prototype = inherit(A.prototype);
+        //상속된 costructor 프로퍼티를 재정의
+        //B.prototype.constructor = B;
+/*
+
+        function Person(name) {
+            this.name = name;
+        }
+
+        Person.prototype.getName = function() {
+            return this.name;
+        }
+
+        Person.prototype.setName = function(name) {
+            this.name = name;
+        }
+
+        var p1 = new Person("bang");
+        var p2 = new Person("sang");
+        var p3 = new Person("eun");
+
+
+
+
+        var addMethod = {
+            getAge : function() {
+                return this.age;
+            },
+            setAge : function(age) {
+                this.age = age;
+            }
+        };
+
+        extend(p1, addMethod);
+        p1.setAge(26);
+        console.log(p1.getAge());
+*/
+
+/*
+
+        Number.prototype.timesCall = function(f) {
+            var n = Number(this);
+            for(var i=0; i<n; i++) {
+                f.call();
+            }
+        };
+
+        function tempPrint() {
+            console.log("함수 호출!");
+        }
+
+        var n = 22;
+        n.timesCall(tempPrint);
+*/
+
+
+
+/*
+
+        person.apply(null, ['sang-eun', 26, 'woman']);
+        person.call(p2, 'sang-eun', 26, 'woman');
+*/
+
+
+
+        //bind()
+/*
+
+        function Test(b){
+            return this.a + b;
+        }
+
+        var o = { a : 1 };
+
+        var g = Test.bind(o);
+*/
+
+
+    </script>
 </head>
 <body>
 

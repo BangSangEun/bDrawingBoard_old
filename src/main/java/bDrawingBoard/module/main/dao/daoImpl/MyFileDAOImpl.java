@@ -1,7 +1,6 @@
 package bDrawingBoard.module.main.dao.daoImpl;
 
 import bDrawingBoard.module.main.dao.MyFileDAO;
-import bDrawingBoard.module.main.vo.FileInfoVO;
 import bDrawingBoard.module.main.vo.MyFileInfoVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,18 +18,13 @@ public class MyFileDAOImpl implements MyFileDAO {
     SqlSessionTemplate sqlSession;
 
     @Override
-    public ArrayList<MyFileInfoVO> getMyFileInfoList(HashMap map) {
-        return sqlSession.getMapper(MyFileDAO.class).getMyFileInfoList(map);
+    public ArrayList<MyFileInfoVO> getMyFileInfoList(String member_id) {
+        return sqlSession.getMapper(MyFileDAO.class).getMyFileInfoList(member_id);
     }
 
     @Override
     public int setMyFileInfo(MyFileInfoVO myFileInfoVO) {
         return sqlSession.getMapper(MyFileDAO.class).setMyFileInfo(myFileInfoVO);
-    }
-
-    @Override
-    public int setFileInfo(FileInfoVO fileInfoVO) {
-        return sqlSession.getMapper(MyFileDAO.class).setFileInfo(fileInfoVO);
     }
 
     @Override

@@ -7,9 +7,8 @@
       </database-info>
       <case-sensitivity plain-identifiers="upper" quoted-identifiers="exact" />
       <secret-storage>master_key</secret-storage>
-      <user-name>root</user-name>
+      <user-name>sa</user-name>
       <introspection-scope>BDRAWINGBOARD:public</introspection-scope>
-      <resolve-scope>BDRAWINGBOARD:public</resolve-scope>
     </data-source>
   </component>
 </project>

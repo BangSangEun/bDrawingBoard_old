@@ -5,66 +5,40 @@
 
 <mapper namespace="bDrawingBoard.module.main.dao.MyFileDAO">
 
-	<select id="getMyFileInfoList" parameterType="hashmap" resultType="MyFileInfoVO">
+	<select id="getMyFileInfoList" parameterType="String" resultType="MyFileInfoVO">
 		/* 내 파일 목록 조회 */
-		SELECT	AA.id
-				,AA.member_id
-				,AA.file_type
-				,AA.file_depth
-				,AA.file_parent
-				,AA.file_id
-				,AA.file_nicname
-		FROM	myfile_info as AA
-		WHERE	AA.use_yn = 'Y'
-		<if test="file_type.equals('folder')">
-		AND 	 AA.FILE_TYPE = 'folder'
-		</if>
-		ORDER BY AA.file_parent, AA.id;
+		SELECT	file_id
+				,member_id
+				,file_name
+				,file_url
+				,regi_date
+		FROM	myfile_info
+		WHERE	member_id = #{member_id}
+		ORDER BY file_id;
 	</select>
 
 	<insert id="setMyFileInfo" parameterType="MyFileInfoVO">
 		/* 내 파일 저장 */
 		INSERT	INTO	myfile_info (
-			member_id
-			,file_type
-			,file_depth
-			,file_parent
-			,file_id
-			,file_nicname
-			,use_yn
+			file_id
+			,member_id
+			,file_name
+			,file_url
+			,regi_date
 		)
 		VALUES	(
-			#{member_id}
-			,#{file_type}
-			,#{file_depth}
-			,#{file_parent}
-			,#{file_id}
-			,#{file_nicname}
-			,'Y'
-		)
-	</insert>
-
-	<insert id="setFileInfo" parameterType="FileInfoVO" useGeneratedKeys="true" keyProperty="file_id">
-		/* 파일 저장 */
-		INSERT	INTO	file_info (
-			file_name
-			,file_path
-		)
-		VALUES	(
-			#{file_name}
-			,#{file_path}
+			SEQ_FILE_ID.nextval
+			,#{member_id}
+			,#{file_name}
+			,#{file_url}
+			,formatdatetime(now(),'yyyy-MM-dd/HH:mm:ss')
 		)
 	</insert>
 
 	<update id="updateMyFileInfo" parameterType="MyFileInfoVO">
 		/* 내 파일 정보 수정 */
 		UPDATE	myfile_info
-		SET 	file_depth = #{file_depth}
-				,file_parent = #{file_parent}
-				,file_nicname = #{file_nicname}
-				<if test="use_yn != null">
-				,use_yn = #{use_yn}
-				</if>
+		SET 	file_name = #{file_name}
 		WHERE	member_id = #{member_id}
 		AND		file_id = #{file_id}
 	</update>

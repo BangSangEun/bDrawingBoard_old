@@ -2,7 +2,6 @@ package bDrawingBoard.module.main.web;
 
 import bDrawingBoard.module.login.vo.MemberVO;
 import bDrawingBoard.module.main.service.MyFileService;
-import bDrawingBoard.module.main.vo.FileInfoVO;
 import bDrawingBoard.module.main.vo.MyFileInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,16 +23,14 @@ public class MyFileController {
 
     /**
      * 내 파일 목록 조회
-     * @param request
      * @param session
      * @return
      */
     @RequestMapping("/getMyFileInfoList.do")
-    public @ResponseBody String getMyFileInfoList(HttpServletRequest request, HttpSession session) {
+    public @ResponseBody String getMyFileInfoList(HttpSession session) {
         MemberVO memberVO =  (MemberVO)session.getAttribute("memberVO");
-        String file_type = request.getParameter("file_type");
 
-        String result = myFileService.getMyFileInfoList(memberVO.getMember_id(), file_type);
+        String result = myFileService.getMyFileInfoList(memberVO.getMember_id());
 
         return result;
     }
@@ -42,7 +39,6 @@ public class MyFileController {
      * 내 파일 저장
      * @param request
      * @param session
-     * @param myFileInfo
      * @return
      */
     @RequestMapping("/setMyFileInfo.do")
@@ -51,32 +47,20 @@ public class MyFileController {
         MemberVO memberVO = (MemberVO)session.getAttribute("memberVO");
 
         myFileInfoVO.setMember_id(memberVO.getMember_id());
-        myFileInfoVO.setFile_type(request.getParameter("file_type"));
-        myFileInfoVO.setFile_nicname(request.getParameter("file_nicname"));
-        String file_parent = request.getParameter("file_parent");
-        if(file_parent != null) {
-            myFileInfoVO.setFile_parent(Integer.parseInt(file_parent));
-        }
+        myFileInfoVO.setFile_name(request.getParameter("file_name"));
+        myFileInfoVO.setFile_url(request.getParameter("save_img")); //img dataURL
 
-        String save_img = request.getParameter("save_img"); //img dataURL
-        String file_dir = "C:\\dev_\\drawingFile\\";
-        FileInfoVO fileInfoVO = myFileService.setFileInfoVO(file_dir, save_img);
-
-        String result = myFileService.setMyFileInfo(myFileInfoVO, fileInfoVO);
-
+        String result = myFileService.setMyFileInfo(myFileInfoVO);
         return result;
     }
 
     /**
      * 내 파일 정보 수정
-     * @param request
-     * @param session
-     * @param myFileInfo
+     * @param myFileInfoVO
      * @return
      */
     @RequestMapping("/updateMyFileInfo.do")
-    public @ResponseBody String updateMyFileInfo(HttpServletRequest request, HttpSession session,
-                                              @ModelAttribute("myFileInfoVO") MyFileInfoVO myFileInfoVO) {
+    public @ResponseBody String updateMyFileInfo(@ModelAttribute("myFileInfoVO") MyFileInfoVO myFileInfoVO) {
         String result = myFileService.updateMyFileInfo(myFileInfoVO);
 
         return result;

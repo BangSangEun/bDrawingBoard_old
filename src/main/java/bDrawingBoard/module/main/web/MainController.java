@@ -15,17 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainController {
 
     @RequestMapping("/main.do")
-    public String mainView(Model model) {
-        return "main/main";
-    }
-
-    @RequestMapping("/top.do")
-    public String topView(Model model) {
-        return "common/top";
-    }
-
-    @RequestMapping("/footer.do")
-    public String footerView() {
-        return "common/footer";
+    public String mainView() {
+        return "main";
     }
 }

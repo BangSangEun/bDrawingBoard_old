@@ -17,17 +17,14 @@ public class MyFileDAOImpl implements MyFileDAO {
     @Autowired
     SqlSessionTemplate sqlSession;
 
-    @Override
     public ArrayList<MyFileInfoVO> getMyFileInfoList(String member_id) {
         return sqlSession.getMapper(MyFileDAO.class).getMyFileInfoList(member_id);
     }
 
-    @Override
     public int setMyFileInfo(MyFileInfoVO myFileInfoVO) {
         return sqlSession.getMapper(MyFileDAO.class).setMyFileInfo(myFileInfoVO);
     }
 
-    @Override
     public int updateMyFileInfo(MyFileInfoVO myFileInfoVO) {
         return sqlSession.getMapper(MyFileDAO.class).updateMyFileInfo(myFileInfoVO);
     }

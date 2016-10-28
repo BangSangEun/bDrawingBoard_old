@@ -14,12 +14,10 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     LoginDAO loginDAO;
 
-    @Override
     public int getMemberInfoCheck(MemberVO memberVO) {
         return loginDAO.getMemberInfoCheck(memberVO);
     }
 
-    @Override
     public MemberVO getMemberInfo(MemberVO memberVO) {
         return loginDAO.getMemberInfo(memberVO);
     }

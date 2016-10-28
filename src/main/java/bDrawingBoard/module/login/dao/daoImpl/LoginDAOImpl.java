@@ -14,12 +14,10 @@ public class LoginDAOImpl implements LoginDAO {
     @Autowired
     SqlSessionTemplate sqlSession;
 
-    @Override
     public int getMemberInfoCheck(MemberVO memberVO) {
         return sqlSession.getMapper(LoginDAO.class).getMemberInfoCheck(memberVO);
     }
 
-    @Override
     public MemberVO getMemberInfo(MemberVO memberVO) {
         return sqlSession.getMapper(LoginDAO.class).getMemberInfo(memberVO);
     }

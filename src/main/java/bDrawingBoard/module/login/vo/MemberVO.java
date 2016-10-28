@@ -8,7 +8,7 @@ public class MemberVO {
     private String member_pw;
     private String member_name;
     private String member_email;
-    private String regi_date;
+    private String use_yn;
 
     public String getMember_id() {
         return member_id;
@@ -42,11 +42,11 @@ public class MemberVO {
         this.member_email = member_email;
     }
 
-    public String getRegi_date() {
-        return regi_date;
+    public String getUse_yn() {
+        return use_yn;
     }
 
-    public void setRegi_date(String regi_date) {
-        this.regi_date = regi_date;
+    public void setUse_yn(String use_yn) {
+        this.use_yn = use_yn;
     }
 }

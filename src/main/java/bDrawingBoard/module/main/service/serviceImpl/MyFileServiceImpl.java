@@ -7,17 +7,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.misc.BASE64Decoder;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 
 /**
  * Created by user on 2016-10-16.
@@ -27,7 +19,6 @@ public class MyFileServiceImpl implements MyFileService {
     @Autowired
     MyFileDAO myFileDAO;
 
-    @Override
     public String getMyFileInfoList(String member_id) {
         JSONObject resultObj = new JSONObject();
         JSONArray tempArray = new JSONArray();
@@ -54,7 +45,6 @@ public class MyFileServiceImpl implements MyFileService {
         return resultObj.toString();
     }
 
-    @Override
     public String setMyFileInfo(MyFileInfoVO myFileInfoVO) {
         String result = "success";
         int myfileSave = myFileDAO.setMyFileInfo(myFileInfoVO);  //내 파일 저장
@@ -66,7 +56,6 @@ public class MyFileServiceImpl implements MyFileService {
         return result;
     }
 
-    @Override
     public String updateMyFileInfo(MyFileInfoVO myFileInfoVO) {
         String result = "success";
         int myfileUpdate = myFileDAO.updateMyFileInfo(myFileInfoVO);

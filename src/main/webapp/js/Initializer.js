@@ -24,16 +24,16 @@ define(['jquery', 'model/Tool', 'handler/DrawingEventHandler', 'handler/FileEven
             this.eventBinder = function() {
                     //======================================= file
                 var save_btn = $(".navi-menu").find("[id^=menu-]"),
-                    myfile_td = $('.file-list').find('td'),
-                    save_view_btn = $('#file-saveView').find('.save-btn'),
-                    file_exit_btn = $('.file-list').find('.div-exit').find('i'),
+                    myfile_list_td = $('.file-list').find('td'),
+                    myfile_save_btn = $('#myfile-save-btn'),
+                    myfile_list_exit = $('.file-list').find('.div-exit').find('i'),
                     //======================================= drawing
                     drawing_tool = $(".drawing-tool").find('li'),
                     drawing_canvas = $("#drawing-canvas"), /* canvas board */
                     pallet_tool = $("div[class^=pallet-]").find('li'),
                     drawclear = $("#menu-drawClear"); /* clear */
 
-                var fileEventObj = [save_btn, myfile_td, save_view_btn, file_exit_btn];
+                var fileEventObj = [save_btn, myfile_list_td, myfile_save_btn, myfile_list_exit];
                 var drawEventObj = [drawing_tool, drawing_canvas, pallet_tool, drawclear];
 
                 var fileEventHandler = new FileEventHandler();

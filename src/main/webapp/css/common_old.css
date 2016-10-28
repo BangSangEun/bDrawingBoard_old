@@ -128,29 +128,38 @@ canvas {display: block; border:1px solid #B8B6B8;}
     position:fixed; left:50%; top:50%; z-index:101; -webkit-transform:translateX(-50%) translateY(-50%); transform:translateX(-50%) translateY(-50%); max-width:100%;}
 
 .file-list .div-list-content {overflow: auto;}
-.file-list .div-exit {width: 100%; background-color: #DCDCDC; height: 30px; line-height: 30px;}
-.file-list .div-exit span {font-weight: bold; color: #333333; font-size: 10pt; margin-left: 10px;}
-.file-list .div-exit i {float: right; margin: 5px; }
 
-.file-list table {width: 100%;}
+.file-list table {width: 100%; }
 .file-list table tr {margin: 5px;}
 .file-list table tr.list-root i.folder-plus-ico {margin-right: 2px; width: 16px; height: 16px; background-size: 16px 16px;}
 .file-list table tr.list-root i.myfolder-black-ico {margin-right: 2px; width: 16px; height: 16px; background-size: 16px 16px;}
-.file-list table tr.list-root > td {width: 100%; padding: 8px 0 8px 20px !important; font-weight: bold;}
 .file-list table tr.list-file i.myfile-ico {margin-right: 0px; width: 16px; height: 16px; background-size: 16px 16px;}
 
-.file-list table tr td {padding: 4px !important; display: inline-flex;}
+
+/*#myfile-list table tr.list-folder 폴더면 원래 mergin-left에서 15 더 빼기*/
+
+.file-list table tr p.list-name {margin: 3px; width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11pt; }
+
+.file-list table tr td#td-folder-root {background-color: #DCDCDC; color: #fff; font-weight: bold;}
+
 .file-list table tr td.on {background-color: #C53163; color: #fff; font-weight: bold;}
 
-.file-list table tr td p.list-name {margin: 3px; width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11pt; }
-.file-list table tr td .list-btn {float: right;}
+.file-list table tr .list-btn {float: right; margin-right: 7px; line-height: 28px;}
 
-.file-list table tr td.depth-0 .list-name {margin-left: 35px;}
-.file-list table tr td.depth-1 .list-name {margin-left: 55px;}
-.file-list table tr td.depth-2 .list-name {margin-left: 75px;}
-.file-list table tr td.depth-3 .list-name {margin-left: 95px;}
+.file-list table tr td.depth-0 .list-name {margin-left: 35px; width: 220px;}
+.file-list table tr td.depth-1 .list-name {margin-left: 55px; width: 200px;}
+.file-list table tr td.depth-2 .list-name {margin-left: 75px; width: 180px;}
+.file-list table tr td.depth-3 .list-name {margin-left: 95px; width: 160px;}
+.file-list table tr td.depth-4 .list-name {margin-left: 115px; width: 140px;}
+.file-list table tr td.depth-5 .list-name {margin-left: 135px; width: 120px;}
 
-.file-list#myfile-save {border: 3px solid #DCDCDC; width: 300px !important; height: 90px;}
+.file-list .div-exit {width: 100%; font-weight: bold; padding: 2px; font-size: 10pt;}
+.file-list#myfile-list .div-exit {background-color: #DCDCDC; color: #333333;}
+.file-list#file-saveView .div-exit {background-color: #333333; color: #fff;}
 
-.file-list#myfile-save .div-list-content {width: 100%; display: inline-flex; padding: 10px; }
-.file-list#myfile-save .div-list-content input {margin-right: 10px;}
+.file-list#file-saveView {border: 3px solid #333333; width: 300px !important; height: 70px;}
+/*.file-list#file-saveView .filesave-top {height: 170px; background-color: #DCDCDC; overflow: auto;}*/
+.file-list#file-saveView .filesave-bottom {margin-left: 10px; font-size: 10pt;}
+.file-list#file-saveView .save-btn {width: 50px; line-height: 20px; color: #333333; font-weight: bold; text-align: center; cursor: pointer; border-radius: 3px; border: 1px solid #333333; background-color: #fff;}
+.file-list#file-saveView .save-btn:hover {background-color: #333333; opacity:0.9; color: #fff;}
+.file-list#file-saveView .save-btn:active {background-color: #333333; opacity:0.6; color: #fff;}

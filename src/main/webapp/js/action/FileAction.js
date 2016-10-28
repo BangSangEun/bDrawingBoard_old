@@ -18,7 +18,7 @@ define(['jquery'],
              * 내 파일 저장 뷰
              */
             this.saveMyFile = function() {
-                $('#file-saveView').show();
+                $('#myfile-save').show();
             }
 
             /**
@@ -28,8 +28,8 @@ define(['jquery'],
             this.saveMyFileEvent = function(event) {
                 if(event.type == 'mousedown') {
                     if(event.target.className.indexOf('exit-ico') > -1) {
-                        $('#file-saveView').hide();
-                    }else if(event.target.className == 'save-btn') {
+                        $('#myfile-save').hide();
+                    }else if(event.target.id == 'myfile-save-btn') {
                         var file_name = $('#filesave-name').val();
                         var save_img = tool.getCanvas().toDataURL('image/png', 1.0);
 
@@ -41,7 +41,7 @@ define(['jquery'],
                             success: function(result) {
                                 if(result == 'success') {
                                     alert("파일 저장 완료");
-                                    $('#file-saveView').hide();
+                                    $('#myfile-save').hide();
                                     $('#filesave-name').val("");
                                 }else {
                                     alert("파일 저장 실패");
@@ -69,9 +69,9 @@ define(['jquery'],
                     dataType: 'json',
                     success: function(result) {
                         var appendHtml = "";
-                        appendHtml += "<tr class=\"list-root\">";
-                        appendHtml += "<td colspan=\"2\" id=\"td-folder-root\">";
-                        appendHtml += "<p class=\"list-name\"><i class=\"tool-ico folder-plus-ico\"></i><i class=\"tool-ico myfolder-black-ico\"></i> /</p>";
+                        appendHtml += "<tr class=\"list-root info\">";
+                        appendHtml += "<td>";
+                        appendHtml += "<i class=\"tool-ico myfolder-black-ico\"></i> /";
                         appendHtml += "</td>";
                         appendHtml += "</tr>";
 
@@ -80,12 +80,12 @@ define(['jquery'],
                                 appendHtml += "<tr class=\"list-file\">";
                                 appendHtml += "<td class=\"depth-0\" id=\"td-file-" + listObj[i].file_id + "\">";
                                 appendHtml += "<p class=\"list-name\">";
-                                appendHtml += "<i class=\"tool-ico myfile-ico\"></i>" + decodeURIComponent(listObj[i].file_name) + "</p></td>";
-                                appendHtml += "<td class=\"list-btn\">";
+                                appendHtml += "<i class=\"tool-ico myfile-ico\"></i>" + decodeURIComponent(listObj[i].file_name) + "</p>";
+                                appendHtml += "<div class=\"list-btn\">";
                                 appendHtml += "<a href=\"javascript:fn_MyfileEventHandler('saveLocal', '" + listObj[i].file_id + "');\"><i class=\"tool-ico savelocal-black-ico\"></i></a>"; // <!-- 다운로드 -->
                                 appendHtml += "<a href=\"javascript:fn_MyfileEventHandler('editName', '" + listObj[i].file_id + "');\"><i class=\"tool-ico editname-ico\"></i></a>"; // <!-- 이름변경 -->
                                 appendHtml += "<a href=\"javascript:fn_MyfileEventHandler('deleteFile', '" + listObj[i].file_id + "');\"><i class=\"tool-ico drawclear-black-ico\"></i></a>"; // <!-- 삭제 -->
-                                appendHtml += "</td></tr>";
+                                appendHtml += "</div></td></tr>";
                             }
                             return appendHtml;
                         }

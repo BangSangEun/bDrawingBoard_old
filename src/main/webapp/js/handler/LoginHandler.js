@@ -11,7 +11,7 @@ define(['jquery'],
              * Login 핸들러
              */
             this.setHandler = function () {
-                $('.login-btn').bind('click', function (event) {
+                $('.login-btn').on('click', function (event) {
                     if (event.target.className.indexOf('btn-login') > -1) {
                         self.goLogin();
                     } else {
@@ -19,7 +19,7 @@ define(['jquery'],
                     }
                 });
 
-                $('.btn-logout').bind('click', function (event) {
+                $('.btn-logout').on('click', function (event) {
                     self.goLogout();
                 });
             };

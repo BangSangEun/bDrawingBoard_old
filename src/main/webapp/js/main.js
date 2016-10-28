@@ -7,6 +7,7 @@ require.config({
     baseUrl: 'js',
     paths: {
         jquery: 'lib/jquery-3.1.1.min',
+        bootstrap: 'lib/bootstrap',
         Initializer: 'Initializer',
         LoginHandler: 'handler/LoginHandler',
         FileEventHandler: 'handler/FileEventHandler',
@@ -19,7 +20,7 @@ require.config({
 });
 
 
-require(['jquery', 'Initializer', 'LoginHandler'],
+require(['jquery', 'Initializer', 'LoginHandler', 'bootstrap'],
     function($, Initializer, LoginHandler) {
         $(document).ready(function() {
             var loginHandler = new LoginHandler();

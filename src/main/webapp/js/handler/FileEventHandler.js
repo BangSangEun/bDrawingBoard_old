@@ -14,8 +14,9 @@ define(['jquery', '../action/FileAction'],
             this.setHandler = function(tool, event) {
                 var fileAction = new FileAction(tool);
 
-                if(event.target.className == 'list-name' || event.target.className == 'save-btn' || event.target.className.indexOf('exit-ico') > -1) {
-                    if($(event.target).closest('div').attr('id') == 'myfile-list' || event.target.parentNode.parentNode.id == 'myfile-list') {
+                if(event.target.className == 'list-name' || event.target.id == 'myfile-save-btn' || event.target.className.indexOf('exit-ico') > -1) {
+                    if($(event.target).closest('div').attr('id') == 'myfile-list'
+                        || event.target.parentNode.parentNode.id == 'myfile-list') {
                         //내 파일 목록 뷰 이벤트
                         fileAction.readMyFileEvent(event);
                     }else {

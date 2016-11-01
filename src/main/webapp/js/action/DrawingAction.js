@@ -18,6 +18,7 @@ define(['jquery', '../model/Tool'],
 
                 $('#default-penSize').hide();
                 $('#brush-penSize').hide();
+                $('#eraser-penSize').hide();
                 $('#brush-shape').hide();
                 $('#figure-shape').hide();
 
@@ -33,7 +34,9 @@ define(['jquery', '../model/Tool'],
                 }else if(tool.getCurrent() == 'figure') {
                     $('#figure-shape').show();
                 }else if(tool.getCurrent() == 'eraser') {
-                    //지우개 크기 선택 기능 추가 예정
+                    tool.getPen().setBrush('square');
+                    tool.getPen().setSize($('#eraser-penSize').find('select').val());
+                    $('#eraser-penSize').show();
                 }
             };
 
@@ -134,6 +137,11 @@ define(['jquery', '../model/Tool'],
                 tool.getContext().lineWidth = tool.getPen().getSize(); //라인 굵기
                 tool.getContext().strokeStyle = tool.getPen().getColor(); //라인 색상
                 tool.getContext().stroke();
+            };
+
+
+            this.paintEvent = function(event) {
+
             };
 
             /**

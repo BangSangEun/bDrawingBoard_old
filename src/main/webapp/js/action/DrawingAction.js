@@ -19,6 +19,7 @@ define(['jquery', '../model/Tool'],
                 $('#default-penSize').hide();
                 $('#brush-penSize').hide();
                 $('#eraser-penSize').hide();
+                $('#figure-penSize').hide();
                 $('#brush-shape').hide();
                 $('#figure-shape').hide();
 
@@ -43,7 +44,9 @@ define(['jquery', '../model/Tool'],
                         $('#eraser-penSize').show();
                         break;
                     case 'figure' :
+                        tool.getPen().setSize($('#figure-penSize').find('select').val());
                         $('#figure-shape').show();
+                        $('#figure-penSize').show();
                         break;
                     case 'paint' :
                         //그라데이션 메뉴 보이기
@@ -96,7 +99,7 @@ define(['jquery', '../model/Tool'],
             };
 
             /**
-             * 지우기
+             * 지우기 이벤트
              * @param event
              */
             this.eraserEvent = function(event) {
@@ -128,28 +131,37 @@ define(['jquery', '../model/Tool'],
              * @param event
              */
             this.drawFigureEvent = function(event) {
-                var figureType = tool.getPen().getFigure(); //도형 모양
+                var figureType; //도형 모양
                 var newX, newY, oldX, oldY;
                 var figureSize;
+                var fillStyle, lineWidth, strokeStyle;
 
-                if(event != null) {
+                if(event != null) { //일반 도형 그리기
+                    figureType = tool.getPen().getFigure();
                     tool.getPen().setNewPoint(event);
                     newX = tool.getPen().getNewPoint().x, newY = tool.getPen().getNewPoint().y;
                     oldX = tool.getPen().getOldPoint().x, oldY = tool.getPen().getOldPoint().y;
                     figureSize = newX - oldX < 0 ? (newX - oldX) * (-1) : (newX - oldX);
-                }else {
-                    tool.getPen().setNewPoint(null, arguments[1]);
+                    lineWidth = tool.getPen().getSize();
+                    strokeStyle = tool.getPen().getColor();
+                    fillStyle = '#ffffff';
+                }else { //그 외 - 두번째 인자에 figureData 전달
+                    figureType = arguments[1].figureType;
+                    tool.getPen().setNewPoint(null, arguments[1].coordinate);
                     oldX = arguments[1].coordinate.x, oldY = arguments[1].coordinate.y;
                     figureSize = arguments[1].figureSize;
+                    lineWidth = arguments[1].lineWidth;
+                    strokeStyle = arguments[1].strokeStyle;
+                    fillStyle = tool.getPen().getColor();
                 }
 
-                tool.getContext().clearRect(0, 0, tool.getCanvas().width, tool.getCanvas().height);
-                tool.getContext().putImageData(tool.getPen().getImageData(), 0, 0);
+                //tool.getContext().clearRect(0, 0, tool.getCanvas().width, tool.getCanvas().height);
+                //tool.getContext().putImageData(tool.getPen().getImageData(), 0, 0);
                 tool.getContext().beginPath();
                 tool.getContext().setLineDash([]);
-                tool.getContext().fillStyle = tool.getPen().getColor(); //채우기 색상
-                tool.getContext().lineWidth = tool.getPen().getSize(); //라인 굵기
-                tool.getContext().strokeStyle = tool.getPen().getColor(); //라인 색상
+                tool.getContext().fillStyle = fillStyle; //채우기 색상
+                tool.getContext().lineWidth = lineWidth; //라인 굵기
+                tool.getContext().strokeStyle = strokeStyle; //라인 색상
 
                 if(figureType == 'circle') {
                     tool.getContext().arc(oldX, oldY, figureSize, 0, 2*Math.PI); //원 중심 좌표, 반지름 크기
@@ -190,12 +202,16 @@ define(['jquery', '../model/Tool'],
             this.paintEvent = function(event) {
                 //개체 선택
                 self.selectObjEvent(event);
-
                 var selectObj = tool.getPen().getEtc().selectObj, index = tool.getPen().getEtc().index;
-                var figureData = self.drawFigureEvent(null, selectObj);
 
-                tool.getData()[(tool.getData()).length - 1 - index] = figureData;
-                tool.getPen().setImageData(tool.getContext().getImageData(0,0,tool.getCanvas().width,tool.getCanvas().height));
+                //개체선택 해제
+                self.prevCanvasReturn();
+
+                if(selectObj != undefined) {
+                    var figureData = self.drawFigureEvent(null, selectObj);
+                    tool.getData()[index] = figureData;
+                    tool.getPen().setImageData(tool.getContext().getImageData(0,0,tool.getCanvas().width,tool.getCanvas().height));
+                }
             };
 
             /**
@@ -242,14 +258,13 @@ define(['jquery', '../model/Tool'],
                         //개체 일시 저장
                         tool.getPen().setEtc({
                             selectObj : data,
-                            index : index
+                            index : dataArr.length - 1 - index
                         });
 
                         return false;
                     }
                 });
 
-                console.log(inObj);
                 if(!inObj) {
                     //개체선택 해제
                     self.prevCanvasReturn();

@@ -80,6 +80,7 @@ define([],
                 _figure,
                 _oldPoint = {x: null, y: null},
                 _newPoint = {x: null, y: null},
+                _imageData,
                 _etc;
 
             this.getSize = function() {
@@ -140,6 +141,14 @@ define([],
                     _newPoint.x = event.offsetX - $(event.target).position().left;
                     _newPoint.y = event.offsetY - $(event.target).position().top;
                 }
+            };
+
+            this.getImageData = function() {
+                return _imageData;
+            };
+
+            this.setImageData = function (imageData) {
+                _imageData = imageData;
             };
 
             this.getEtc = function() {

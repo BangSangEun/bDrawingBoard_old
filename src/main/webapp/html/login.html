@@ -5,9 +5,8 @@
 
     <link rel="stylesheet" type="text/css" href="/css/common.css"/>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"/>
-
-    <script data-main="js/main.js" src="js/lib/require.js"></script>
-
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.css"/>
+    <script data-main="js/main.js" src="/js/lib/require.js"></script>
     <title>Welcome Page</title>
 </head>
 <body style="background-color: #DCDCDC">
@@ -19,15 +18,15 @@
         <div id="login-box">
             <form class="form-horizontal" id="loginForm" action="/goLogin.do" method="POST">
                 <div class="form-group form-group-lg">
-                    <label for="member_id" class="col-sm-3 control-label">ID</label>
+                    <label class="col-sm-3 control-label">ID</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" name="member_id" placeholder="ID">
+                        <input type="text" class="form-control" id="loginId" name="member_id" placeholder="ID">
                     </div>
                 </div>
                 <div class="form-group form-group-lg">
-                    <label for="member_pw" class="col-sm-3 control-label">Password</label>
+                    <label class="col-sm-3 control-label">Password</label>
                     <div class="col-sm-9">
-                        <input type="password" class="form-control" name="member_pw" placeholder="Password">
+                        <input type="password" class="form-control" id="loginPw" name="member_pw" placeholder="Password">
                     </div>
                 </div>
                 <div class="form-group">

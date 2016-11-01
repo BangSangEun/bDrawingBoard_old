@@ -113,35 +113,95 @@ define(['jquery', '../model/Tool'],
              * @param event
              */
             this.drawFigureEvent = function(event) {
-                var shape = tool.getPen().getFigure(); //도형 모양
+                var figureType = tool.getPen().getFigure(); //도형 모양
                 tool.getPen().setNewPoint(event);
                 var newX = tool.getPen().getNewPoint().x, newY = tool.getPen().getNewPoint().y,
                     oldX = tool.getPen().getOldPoint().x, oldY = tool.getPen().getOldPoint().y;
                 var figureSize = newX - oldX < 0 ? (newX - oldX) * (-1) : (newX - oldX);
 
                 tool.getContext().clearRect(0, 0, tool.getCanvas().width, tool.getCanvas().height);
-                tool.getContext().putImageData(tool.getPen().getEtc(), 0, 0);
+                tool.getContext().putImageData(tool.getPen().getImageData(), 0, 0);
                 tool.getContext().beginPath();
 
-                if(shape == 'circle') {
+                if(figureType == 'circle') {
                     tool.getContext().arc(oldX, oldY, figureSize, 0, 2*Math.PI); //원 중심 좌표, 반지름 크기
-                }else if(shape == 'triangle') {
+                    tool.getContext().fillStyle = tool.getPen().getColor();
+                }else if(figureType == 'triangle') {
                     tool.getContext().moveTo(oldX, oldY - figureSize/2);
                     tool.getContext().lineTo(oldX - figureSize/2, oldY + figureSize/2);
                     tool.getContext().lineTo(oldX + figureSize/2, oldY + figureSize/2);
-                }else if(shape == 'square') {
+                }else if(figureType == 'square') {
                     tool.getContext().strokeRect(oldX - figureSize/2, oldY - figureSize/2, figureSize, figureSize);
                 }
 
                 tool.getContext().closePath();
                 tool.getContext().lineWidth = tool.getPen().getSize(); //라인 굵기
                 tool.getContext().strokeStyle = tool.getPen().getColor(); //라인 색상
+                tool.getContext().fill();
                 tool.getContext().stroke();
+
+                var figureData = {
+                    figureType : figureType,    //도형 타입
+                    coordinate : {x: oldX, y: oldY},    //도형 좌표
+                    figureSize : figureSize,    //도형 크기
+                    strokeStyle : tool.getContext().strokeStyle,    //라인 색상
+                    lineWidth : tool.getContext().lineWidth,    //라인 굵기
+                    fillStyle : tool.getContext().fillStyle == undefined ? null : tool.getContext().fillStyle,   //채우기 색상
+                    imageData: tool.getPen().getImageData()
+                };
+
+                tool.getPen().setEtc(figureData);
             };
 
-
+            /**
+             * 채우기 이벤트 - (도형)
+             * @param event
+             */
             this.paintEvent = function(event) {
 
+            };
+
+            /**
+             * 도형 선택
+             * @param event
+             */
+            this.selectFigureEvent = function(event) {
+                tool.getPen().setNewPoint(event);
+                //var inArea = false, inFigure;
+                var x = tool.getPen().getNewPoint().x, y = tool.getPen().getNewPoint().y;
+                var leftTopX, leftTopY, leftBottomX, leftBottomY, rightTopX, rightTopY, rightBottomX, rightBottomY;
+                var figureX, figureY;
+
+                $(tool.getData()).each(function(index, data) {
+                    figureX = data.coordinate.x, figureY = data.coordinate.y;
+
+                    leftTopX = figureX - data.figureSize, leftTopY = figureY - data.figureSize,
+                    leftBottomX = figureX - data.figureSize, leftBottomY = figureY + data.figureSize,
+                    rightTopX = figureX + data.figureSize, rightTopY = figureY - data.figureSize,
+                    rightBottomX = figureX + data.figureSize, rightBottomY = figureY + data.figureSize;
+
+                    console.log(leftTopX + ", " + leftTopY);
+                    console.log(leftBottomX + ", " + leftBottomY);
+                    console.log(rightTopX + ", " + rightTopY);
+                    console.log(rightBottomX + ", " + rightBottomY);
+
+
+                    //사각 프레임 영역으로 도형 인식
+                    if(leftTopX <= x && x <= rightTopX
+                        && leftTopY <= y && y <= leftBottomY) {
+                        tool.getContext().beginPath();
+                        tool.getContext().setLineDash([4, 3]); //dash 수정필요
+                        tool.getContext().moveTo(leftTopX, leftTopY);
+                        tool.getContext().lineTo(leftBottomX, leftBottomY);
+                        tool.getContext().lineTo(rightBottomX, rightBottomY);
+                        tool.getContext().lineTo(rightTopX, rightTopY);
+                        tool.getContext().closePath();
+                        tool.getContext().lineWidth = '1'; //라인 굵기
+                        tool.getContext().strokeStyle = '#333333'; //라인 색상
+                        tool.getContext().stroke();
+                        return;
+                    }
+                });
             };
 
             /**
@@ -161,14 +221,20 @@ define(['jquery', '../model/Tool'],
                             case 'figure' :
                                 console.log("도형 첫 클릭");
                                 tool.getPen().setOldPoint(event);
-                                tool.getPen().setEtc(tool.getContext().getImageData(0,0,tool.getCanvas().width,tool.getCanvas().height));
+                                tool.getPen().setImageData(tool.getContext().getImageData(0,0,tool.getCanvas().width,tool.getCanvas().height));
+                                break;
+                            case 'paint' :
+                                self.selectFigureEvent(event);
                                 break;
                         }
                     }
                 } else if (event.type == 'mouseup') {
                     console.log("클릭 해제");
                     tool.setMouseDown(false);
-                    //tool.getPen().setEtc(null);
+                    if(tool.getCurrent() == 'figure') {
+                        tool.getData().push(tool.getPen().getEtc());
+                        console.log(tool.getData());
+                    }
                 } else if (event.type == 'mouseover') {
                     console.log("마우스 오버");
                     tool.setMouseDown(false);
@@ -192,16 +258,6 @@ define(['jquery', '../model/Tool'],
                 }
 
             }
-        };
-
-        /**
-         * Point 객체
-         * @param event
-         * @constructor
-         */
-        var Point = function(event) {
-            this.x = event.offsetX - $(event.target).position().left;
-            this.y = event.offsetY - $(event.target).position().top;
         };
 
         return drawingAction;

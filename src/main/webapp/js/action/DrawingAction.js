@@ -84,7 +84,7 @@ define(['jquery', '../model/Tool'],
              * 지우개 선택
              * @param event
              */
-            this.eraserEvent = function() {
+            this.eraserEvent = function(event) {
                 tool.getPen().setNewPoint(event);
                 tool.getContext().clearRect(tool.getPen().getNewPoint().x, tool.getPen().getNewPoint().y, tool.getPen().getSize(), tool.getPen().getSize());
             };

@@ -33,8 +33,7 @@ define(['jquery', '../model/Tool'],
                 }else if(tool.getCurrent() == 'figure') {
                     $('#figure-shape').show();
                 }else if(tool.getCurrent() == 'eraser') {
-                    self.eraserSelect();
-
+                    //지우개 크기 선택 기능 추가 예정
                 }
             };
 
@@ -68,8 +67,6 @@ define(['jquery', '../model/Tool'],
              * @param event
              */
             this.figureSelect = function(event) {
-                //var figureShape = $(event.target).val();
-                console.log($(event.target).val());
                 tool.getPen().setFigure($(event.target).val());
             };
             
@@ -84,9 +81,9 @@ define(['jquery', '../model/Tool'],
              * 지우개 선택
              * @param event
              */
-            this.eraserSelect = function() {
-                tool.getPen().setColor('#fff');
-                tool.getPen().setBrush('square');
+            this.eraserEvent = function() {
+                tool.getPen().setNewPoint(event);
+                tool.getContext().clearRect(tool.getPen().getNewPoint().x, tool.getPen().getNewPoint().y, tool.getPen().getSize(), tool.getPen().getSize());
             };
 
             /**
@@ -113,52 +110,30 @@ define(['jquery', '../model/Tool'],
              * @param event
              */
             this.drawFigureEvent = function(event) {
-                var shape = tool.getPen().getFigure();
+                var shape = tool.getPen().getFigure(); //도형 모양
                 tool.getPen().setNewPoint(event);
-                var newX = tool.getPen().getNewPoint().x, oldX = tool.getPen().getOldPoint().x;
+                var newX = tool.getPen().getNewPoint().x, newY = tool.getPen().getNewPoint().y,
+                    oldX = tool.getPen().getOldPoint().x, oldY = tool.getPen().getOldPoint().y;
                 var figureSize = newX - oldX < 0 ? (newX - oldX) * (-1) : (newX - oldX);
-                var prevFigure;
 
-                prevFigure = tool.getPen().getEtc();
+                tool.getContext().clearRect(0, 0, tool.getCanvas().width, tool.getCanvas().height);
+                tool.getContext().putImageData(tool.getPen().getEtc(), 0, 0);
+                tool.getContext().beginPath();
+
                 if(shape == 'circle') {
-                    if(prevFigure != undefined && prevFigure != null) {
-                        tool.getContext().globalCompositeOperation = 'destination-out';
-                        tool.getContext().moveTo(prevFigure[0], prevFigure[1]);
-                        tool.getContext().beginPath();
-                        tool.getContext().arc(prevFigure[0], prevFigure[1], prevFigure[2]+2, 0, 2*Math.PI); //원 중심 좌표, 반지름 크기
-                        tool.getContext().closePath();
-                        tool.getContext().lineWidth = tool.getPen().getSize(); //라인 굵기
-                        tool.getContext().strokeStyle = tool.getPen().getColor(); //라인 색상
-                        tool.getContext().stroke();
-                    }
-
-                    tool.getContext().globalCompositeOperation = 'source-over';
-                    tool.getContext().moveTo(tool.getPen().getOldPoint().x, tool.getPen().getOldPoint().y);
-                    tool.getContext().beginPath();
-                    tool.getContext().arc(tool.getPen().getOldPoint().x, tool.getPen().getOldPoint().y, figureSize, 0, 2*Math.PI); //원 중심 좌표, 반지름 크기
-                    tool.getContext().closePath();
-                    tool.getContext().lineWidth = tool.getPen().getSize(); //라인 굵기
-                    tool.getContext().strokeStyle = tool.getPen().getColor(); //라인 색상
-                    tool.getContext().stroke();
-
-                    prevFigure = [tool.getPen().getOldPoint().x, tool.getPen().getOldPoint().y, figureSize];
-                    tool.getPen().setEtc(prevFigure);
-                }else if(shape == 'squre') {
-
+                    tool.getContext().arc(oldX, oldY, figureSize, 0, 2*Math.PI); //원 중심 좌표, 반지름 크기
+                }else if(shape == 'triangle') {
+                    tool.getContext().moveTo(oldX, oldY - figureSize/2);
+                    tool.getContext().lineTo(oldX - figureSize/2, oldY + figureSize/2);
+                    tool.getContext().lineTo(oldX + figureSize/2, oldY + figureSize/2);
+                }else if(shape == 'square') {
+                    tool.getContext().strokeRect(oldX - figureSize/2, oldY - figureSize/2, figureSize, figureSize);
                 }
 
-                //tool.getContext().fill();
-
-
-                /*
-                // 빨간색 채움형태 사각형
-                ctx.fillStyle = 'rgb(255, 0, 0)';
-                ctx.fillRect(10, 10, 80, 80);
-                // 사각형 범위 지우기
-                ctx.clearRect(20, 20, 60, 60);
-                // 사각형 테두리
-                ctx.strokeRect(30, 30, 40, 40);
-                */
+                tool.getContext().closePath();
+                tool.getContext().lineWidth = tool.getPen().getSize(); //라인 굵기
+                tool.getContext().strokeStyle = tool.getPen().getColor(); //라인 색상
+                tool.getContext().stroke();
             };
 
             /**
@@ -178,13 +153,14 @@ define(['jquery', '../model/Tool'],
                             case 'figure' :
                                 console.log("도형 첫 클릭");
                                 tool.getPen().setOldPoint(event);
+                                tool.getPen().setEtc(tool.getContext().getImageData(0,0,tool.getCanvas().width,tool.getCanvas().height));
                                 break;
                         }
                     }
                 } else if (event.type == 'mouseup') {
                     console.log("클릭 해제");
                     tool.setMouseDown(false);
-                    tool.getPen().setEtc(null);
+                    //tool.getPen().setEtc(null);
                 } else if (event.type == 'mouseover') {
                     console.log("마우스 오버");
                     tool.setMouseDown(false);
@@ -195,11 +171,13 @@ define(['jquery', '../model/Tool'],
                         switch(tool.getCurrent()) {
                             case 'pencil' :
                             case 'brush' :
-                            case 'eraser' :
                                 self.drawLineEvent(event);
                                 break;
                             case 'figure' :
                                 self.drawFigureEvent(event);
+                                break;
+                            case 'eraser' :
+                                self.eraserEvent(event);
                                 break;
                         }
                     }

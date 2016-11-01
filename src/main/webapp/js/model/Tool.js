@@ -10,7 +10,8 @@ define([],
             var self = this,
                 _mouseDown = false,
                 _current = null,
-                _pen = new Pen();
+                _pen = new Pen(),
+                _data = [];
 
             this.getCanvas = function() {
                 return document.getElementById("drawing-canvas");
@@ -61,7 +62,15 @@ define([],
 
             this.setPen = function(pen) {
                 _pen = pen;
-            }
+            };
+
+            this.getData = function () {
+                return _data;
+            };
+
+            this.setData = function(data) {
+                _data = data;
+            };
         };
 
         var Pen = function() {

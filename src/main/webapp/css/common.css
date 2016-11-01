@@ -120,7 +120,7 @@ canvas {display: block; border:1px solid #B8B6B8;}
 .paint-ico {background-image: url("../image/icon/paint_ico.png");}
 .eraser-ico {background-image: url("../image/icon/pencil_ico.png");}
 .text-ico {background-image: url("../image/icon/text_ico.png");}
-.selectarea-ico {background-image: url("../image/icon/area_ico.png");}
+.selectObj-ico {background-image: url("../image/icon/area_ico.png");}
 
 /* ----------- menu icon */
 .savelocal-ico {background-image: url("../image/icon/download_white_ico.png");}

@@ -12,14 +12,6 @@ define([],
                 _current = null,
                 _pen = new Pen();
 
-/*
-            this.init = function(mouseDown, current, pen) {
-                _mouseDown = mouseDown;
-                _current = current;
-                _pen = pen;
-            }
-*/
-
             this.getCanvas = function() {
                 return document.getElementById("drawing-canvas");
             }
@@ -73,11 +65,13 @@ define([],
         };
 
         var Pen = function() {
-            var _size = null,
-                _color = null,
-                _brush = null,
+            var _size,
+                _color,
+                _brush,
+                _figure,
                 _oldPoint = {x: null, y: null},
-                _newPoint = {x: null, y: null};
+                _newPoint = {x: null, y: null},
+                _etc;
 
             this.getSize = function() {
                 return _size;
@@ -101,6 +95,14 @@ define([],
 
             this.setBrush = function(brush) {
                 _brush = brush;
+            }
+
+            this.getFigure = function() {
+                return _figure;
+            }
+
+            this.setFigure = function(figure) {
+                _figure = figure;
             }
 
             this.getOldPoint = function() {
@@ -129,6 +131,14 @@ define([],
                     _newPoint.x = event.offsetX - $(event.target).position().left;
                     _newPoint.y = event.offsetY - $(event.target).position().top;
                 }
+            }
+
+            this.getEtc = function() {
+                return _etc;
+            }
+
+            this.setEtc = function(etc) {
+                _etc = etc;
             }
         };
 

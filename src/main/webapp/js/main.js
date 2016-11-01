@@ -7,7 +7,6 @@ require.config({
     baseUrl: 'js',
     paths: {
         jquery: 'lib/jquery-3.1.1.min',
-        bootstrap: 'lib/bootstrap',
         Initializer: 'Initializer',
         LoginHandler: 'handler/LoginHandler',
         FileEventHandler: 'handler/FileEventHandler',
@@ -15,12 +14,14 @@ require.config({
         FileAction: 'action/FileAction',
         DrawingAction: 'action/DrawingAction',
         Member: 'model/Member',
-        Tool: 'model/Tool'
+        Tool: 'model/Tool',
+        bootstrap: 'lib/bootstrap',
+        bootstrap_select: 'lib/bootstrap-select'
     }
 });
 
 
-require(['jquery', 'Initializer', 'LoginHandler', 'bootstrap'],
+require(['jquery', 'Initializer', 'LoginHandler', 'bootstrap', 'bootstrap_select'],
     function($, Initializer, LoginHandler) {
         $(document).ready(function() {
             var loginHandler = new LoginHandler();
@@ -42,6 +43,8 @@ require(['jquery', 'Initializer', 'LoginHandler', 'bootstrap'],
                     $('#top-memberInfo').text(decodeURIComponent(result['memberName']));
                 });
             }
+
+            $('.selectpicker').selectpicker();
         });
 });
 

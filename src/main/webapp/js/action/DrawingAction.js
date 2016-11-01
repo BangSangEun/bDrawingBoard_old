@@ -13,29 +13,28 @@ define(['jquery', '../model/Tool'],
              */
             this.toolSelect = function(event) {
                 tool.setCurrent(event.target.id.split('tool-')[1]);
+                $("button[id^=tool-]").removeClass("active");
+                $("#" + event.target.id).addClass("active");
 
-                if(tool.getCurrent() == 'brush') {
-                    $('#add-brush-tool').show();
-                    $('#brush-penSize').show();
-                    $('#default-penSize').hide();
+                $('#default-penSize').hide();
+                $('#brush-penSize').hide();
+                $('#brush-shape').hide();
+                $('#figure-shape').hide();
 
-                    tool.getPen().setSize($('.penSize-pallet:visible').find('ul > li:first-child').attr('id').split('penSize-')[1]); //1; //pencil, brush 사용 변수
+                if(tool.getCurrent() == 'pencil') {
                     tool.getPen().setBrush('round');
-                    //var initializer = new Initializer();
-                    //Initializer.initTool.call(null, false);
-                    //initializer.initTool(false);
-                }else {
-                    $('.additional-tool').find('div').hide();
+                    tool.getPen().setSize($('#default-penSize').find('select').val());
                     $('#default-penSize').show();
-                    $('#brush-penSize').hide();
+                }else if(tool.getCurrent() == 'brush') {
+                    tool.getPen().setBrush($('#brush-shape').find('select').val());
+                    tool.getPen().setSize($('#brush-penSize').find('select').val());
+                    $('#brush-shape').show();
+                    $('#brush-penSize').show();
+                }else if(tool.getCurrent() == 'figure') {
+                    $('#figure-shape').show();
+                }else if(tool.getCurrent() == 'eraser') {
+                    self.eraserSelect();
 
-                    tool.getPen().setSize($('.penSize-pallet:visible').find('ul > li:first-child').attr('id').split('penSize-')[1]); //1; //pencil, brush 사용 변수
-                    tool.getPen().setBrush('round');
-                    //initializer.initTool(false);
-
-                    if(tool.getCurrent() == 'eraser') {
-                        self.eraserSelect();
-                    }
                 }
             }
 
@@ -44,8 +43,7 @@ define(['jquery', '../model/Tool'],
              * @param event
              */
             this.penSizeSelect = function(event) {
-                $(event.target).addClass('on');
-                tool.getPen().setSize(event.target.id.split('penSize-')[1]);
+                tool.getPen().setSize($(event.target).val());
             }
 
             /**
@@ -58,13 +56,23 @@ define(['jquery', '../model/Tool'],
             }
 
             /**
-             * 브러쉬 선택
+             * 브러쉬 모양 선택
              * @param event
              */
             this.brushSelect = function(event) {
-                tool.getPen().setBrush(event.target.id.split('brush-')[1]);
+                tool.getPen().setBrush($(event.target).val());
             }
 
+            /**
+             * 도형 모양 선택
+             * @param event
+             */
+            this.figureSelect = function(event) {
+                //var figureShape = $(event.target).val();
+                console.log($(event.target).val());
+                tool.getPen().setFigure($(event.target).val());
+            }
+            
             /**
              * 새로그리기
              */
@@ -101,6 +109,59 @@ define(['jquery', '../model/Tool'],
             }
 
             /**
+             * 도형 그리기 이벤트
+             * @param event
+             */
+            this.drawFigureEvent = function(event) {
+                var shape = tool.getPen().getFigure();
+                tool.getPen().setNewPoint(event);
+                var newX = tool.getPen().getNewPoint().x, oldX = tool.getPen().getOldPoint().x;
+                var figureSize = newX - oldX < 0 ? (newX - oldX) * (-1) : (newX - oldX);
+                var prevFigure;
+
+                prevFigure = tool.getPen().getEtc();
+                if(shape == 'circle') {
+                    if(prevFigure != undefined && prevFigure != null) {
+                        tool.getContext().globalCompositeOperation = 'destination-out';
+                        tool.getContext().moveTo(prevFigure[0], prevFigure[1]);
+                        tool.getContext().beginPath();
+                        tool.getContext().arc(prevFigure[0], prevFigure[1], prevFigure[2]+2, 0, 2*Math.PI); //원 중심 좌표, 반지름 크기
+                        tool.getContext().closePath();
+                        tool.getContext().lineWidth = tool.getPen().getSize(); //라인 굵기
+                        tool.getContext().strokeStyle = tool.getPen().getColor(); //라인 색상
+                        tool.getContext().stroke();
+                    }
+
+                    tool.getContext().globalCompositeOperation = 'source-over';
+                    tool.getContext().moveTo(tool.getPen().getOldPoint().x, tool.getPen().getOldPoint().y);
+                    tool.getContext().beginPath();
+                    tool.getContext().arc(tool.getPen().getOldPoint().x, tool.getPen().getOldPoint().y, figureSize, 0, 2*Math.PI); //원 중심 좌표, 반지름 크기
+                    tool.getContext().closePath();
+                    tool.getContext().lineWidth = tool.getPen().getSize(); //라인 굵기
+                    tool.getContext().strokeStyle = tool.getPen().getColor(); //라인 색상
+                    tool.getContext().stroke();
+
+                    prevFigure = [tool.getPen().getOldPoint().x, tool.getPen().getOldPoint().y, figureSize];
+                    tool.getPen().setEtc(prevFigure);
+                }else if(shape == 'squre') {
+
+                }
+
+                //tool.getContext().fill();
+
+
+                /*
+                // 빨간색 채움형태 사각형
+                ctx.fillStyle = 'rgb(255, 0, 0)';
+                ctx.fillRect(10, 10, 80, 80);
+                // 사각형 범위 지우기
+                ctx.clearRect(20, 20, 60, 60);
+                // 사각형 테두리
+                ctx.strokeRect(30, 30, 40, 40);
+                */
+            }
+
+            /**
              * 캔바스 이벤트
              * @param event
              */
@@ -112,7 +173,10 @@ define(['jquery', '../model/Tool'],
                             case 'pencil' :
                             case 'brush' :
                             case 'eraser' :
-                                console.log("첫 클릭");
+                                tool.getPen().setOldPoint(event);
+                                break;
+                            case 'figure' :
+                                console.log("도형 첫 클릭");
                                 tool.getPen().setOldPoint(event);
                                 break;
                         }
@@ -120,11 +184,12 @@ define(['jquery', '../model/Tool'],
                 } else if (event.type == 'mouseup') {
                     console.log("클릭 해제");
                     tool.setMouseDown(false);
+                    tool.getPen().setEtc(null);
                 } else if (event.type == 'mouseover') {
                     console.log("마우스 오버");
                     tool.setMouseDown(false);
                 } else if (event.type == 'keydown') {
-                    console.log("키 다운");
+
                 } else if (event.type == 'mousemove') {
                     if(tool.getMouseDown()) {
                         switch(tool.getCurrent()) {
@@ -132,6 +197,9 @@ define(['jquery', '../model/Tool'],
                             case 'brush' :
                             case 'eraser' :
                                 self.drawLineEvent(event);
+                                break;
+                            case 'figure' :
+                                self.drawFigureEvent(event);
                                 break;
                         }
                     }

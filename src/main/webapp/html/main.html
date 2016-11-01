@@ -5,6 +5,8 @@
 
     <link rel="stylesheet" type="text/css" href="/css/common.css"/>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-select.css"/>
     <script data-main="js/main.js" src="../js/lib/require.js"></script>
 
     <script type="text/javascript"></script>
@@ -42,56 +44,100 @@
         </ul>
     </div>
 
-    <!--내 파일 목록 뷰-->
-    <div class="file-list" id="myfile-list" style="display: none;">
-        <div class="div-exit">
-            <span>내 파일 목록</span>
-            <i class="tool-ico exit-ico"></i>
-        </div>
-        <div class="div-list-content">
-            <table class="table table-striped">
-                <tbody>
-                </tbody>
-            </table>
+    <!-- 내 파일 목록 뷰 -->
+    <div class="modal fade file-view" id="myfile-list" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- header -->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">내 파일 목록</h4>
+                </div>
+                <!-- body -->
+                <div class="modal-body">
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr class="list-root">
+                                <td><i class="tool-ico myfolder-black-ico"></i> /</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="div-list-file">
+                        <table class="table table-striped">
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default file-btn-close">닫기</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!--내 파일 저장 뷰-->
-    <div class="file-list" id="myfile-save" style="display:none;">
-        <div class="div-exit">
-            <span>내 파일 저장</span>
-            <i class="tool-ico exit-ico"></i>
-        </div>
-        <div class="div-list-content">
-            <input type="text" class="form-control" id="filesave-name" placeholder="파일명을 입력하세요."/>
-            <button class="btn btn-default" id="myfile-save-btn">저장</button>
+    <!-- 내 파일 저장 뷰 -->
+    <div class="modal fade" id="myfile-save" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <!-- header -->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">내 파일 저장</h4>
+                </div>
+                <!-- body -->
+                <div class="modal-body">
+                    <input type="text" class="form-control" id="filesave-name" placeholder="파일명을 입력하세요."/>
+                </div>
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-primary" id="myfile-save-btn">저장</button>
+                </div>
+            </div>
         </div>
     </div>
+
 </header>
 <secssion id="content-panel">
     <!-- 그림 도구 -->
     <div class="drawing-tool">
         <ul>
-            <li id="tool-pencil">
-                <i class="tool-ico pencil-ico"></i> 연필
+            <li>
+                <button type="button" class="btn btn-default" id="tool-pencil">
+                    <i class="tool-ico pencil-ico"></i> 연필
+                </button>
             </li>
-            <li id="tool-brush">
-                <i class="tool-ico brush-ico"></i> 브러시
+            <li>
+                <button type="button" class="btn btn-default" id="tool-brush">
+                    <i class="tool-ico brush-ico"></i> 브러시
+                </button>
             </li>
-            <li id="tool-figure">
-                <i class="tool-ico figure-ico"></i> 도형
+            <li>
+                <button type="button" class="btn btn-default" id="tool-figure">
+                    <i class="tool-ico figure-ico"></i> 도형
+                </button>
             </li>
-            <li id="tool-paint">
-                <i class="tool-ico paint-ico"></i> 채우기
+            <li>
+                <button type="button" class="btn btn-default" id="tool-paint">
+                    <i class="tool-ico paint-ico"></i> 채우기
+                </button>
             </li>
-            <li id="tool-eraser">
-                <i class="tool-ico eraser-ico"></i> 지우개
+            <li>
+                <button type="button" class="btn btn-default" id="tool-eraser">
+                    <i class="tool-ico eraser-ico"></i> 지우개
+                </button>
             </li>
-            <li id="tool-text">
-                <i class="tool-ico text-ico"></i> 텍스트
+            <li>
+                <button type="button" class="btn btn-default" id="tool-text">
+                    <i class="tool-ico text-ico"></i> 텍스트
+                </button>
             </li>
-            <li id="tool-selectarea">
-                <i class="tool-ico selectarea-ico"></i> 영역선택
+            <li>
+                <button type="button" class="btn btn-default" id="tool-selectarea">
+                    <i class="tool-ico selectarea-ico"></i> 영역선택
+                </button>
             </li>
         </ul>
     </div>
@@ -103,30 +149,43 @@
     <div class="navi-footer">
         <div class="pallet-left">
             <div class="pallet-left additional-tool">
-                <div id="add-brush-tool" style="display:none;">
-                    <ul>
-                        <li id="brush-round">원</li>
-                        <li id="brush-square">네모</li>
-                        <li id="brush-butt">마커</li>
-                    </ul>
+                <div id="add-brush-tool">
+
+                    <div id="brush-shape" style="display:none;">
+                        <select class="selectpicker">
+                            <option data-content="<span class='label label-success'>원</span>" value="round"></option>
+                            <option data-content="<span class='label label-success'>네모</span>" value="square"></option>
+                            <option data-content="<span class='label label-success'>마커</span>" value="butt"></option>
+                        </select>
+                    </div>
+
+                    <div id="figure-shape" style="display:none;">
+                        <select class="selectpicker">
+                            <option data-content="<span class='label label-success'>원</span>" value="circle"></option>
+                            <option data-content="<span class='label label-success'>세모</span>" value="triangle"></option>
+                            <option data-content="<span class='label label-success'>네모</span>" value="square"></option>
+                            <option data-content="<span class='label label-success'>별</span>" value="star"></option>
+                        </select>
+                    </div>
+
                 </div>
             </div>
             <div class="pallet-right">
                 <div class="penSize-pallet" id="default-penSize">
-                    <ul>
-                        <li id="penSize-1">1</li>
-                        <li id="penSize-2">2</li>
-                        <li id="penSize-3">3</li>
-                        <li id="penSize-4">4</li>
-                    </ul>
+                    <select class="selectpicker">
+                        <option data-content="<span class='label label-success'>1</span>" value="1"></option>
+                        <option data-content="<span class='label label-success'>2</span>" value="2"></option>
+                        <option data-content="<span class='label label-success'>3</span>" value="3"></option>
+                        <option data-content="<span class='label label-success'>4</span>" value="4"></option>
+                    </select>
                 </div>
                 <div class="penSize-pallet" id="brush-penSize" style="display:none;">
-                    <ul>
-                        <li id="penSize-5">5</li>
-                        <li id="penSize-10">10</li>
-                        <li id="penSize-15">15</li>
-                        <li id="penSize-20">20</li>
-                    </ul>
+                    <select class="selectpicker">
+                        <option data-content="<span class='label label-success'>5</span>" value="5"></option>
+                        <option data-content="<span class='label label-success'>10</span>" value="10"></option>
+                        <option data-content="<span class='label label-success'>15</span>" value="15"></option>
+                        <option data-content="<span class='label label-success'>20</span>" value="20"></option>
+                    </select>
                 </div>
             </div>
         </div>

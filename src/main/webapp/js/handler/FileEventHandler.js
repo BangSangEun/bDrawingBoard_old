@@ -14,14 +14,19 @@ define(['jquery', '../action/FileAction'],
             this.setHandler = function(tool, event) {
                 var fileAction = new FileAction(tool);
 
-                if(event.target.className == 'list-name' || event.target.id == 'myfile-save-btn' || event.target.className.indexOf('exit-ico') > -1) {
-                    if($(event.target).closest('div').attr('id') == 'myfile-list'
-                        || event.target.parentNode.parentNode.id == 'myfile-list') {
-                        //내 파일 목록 뷰 이벤트
-                        fileAction.readMyFileEvent(event);
-                    }else {
-                        //내 파일 저장 뷰 이벤트
-                        fileAction.saveMyFileEvent(event);
+                if($(event.target).parents('div#myfile-list').length > 0) {
+                    //내 파일 목록 뷰 이벤트
+                    if(event.type == 'mousedown') {
+                        if(event.target.className.indexOf('file-btn-close') > -1) {
+                            fileAction.myFileListView(false);
+                        }
+                    }
+                }else if($(event.target).parents('div#myfile-save').length > 0) {
+                    //내 파일 저장 이벤트
+                    if(event.type == 'mousedown') {
+                        if(event.target.id == 'myfile-save-btn') {
+                            fileAction.myFileSave(event);
+                        }
                     }
                 }else {
                     if (event.type == 'mousedown') {
@@ -30,10 +35,10 @@ define(['jquery', '../action/FileAction'],
                             fileAction.saveLocalFile();
                         }else if(event.target.id == 'menu-saveFile') {
                             //내 파일 저장 뷰
-                            fileAction.saveMyFile();
+                            fileAction.myFileSaveView(true);
                         }else if(event.target.id == 'menu-myFileList') {
                             //내 파일 목록 뷰
-                            fileAction.readMyFile();
+                            fileAction.myFileListView(true);
                         }
                     }
                 }

@@ -32,7 +32,8 @@ define(['jquery'],
                 for (var i = 0; i < vali_obj.length; i++) {
                     var obj = $("input[name=" + vali_obj[i] + "]");
                     if (obj.val() == undefined || obj.val() == null || obj.val() == "") {
-                        alert("'" + $(obj).parent().prev('th').text() + "'를 입력하세요.");
+
+                        alert("'" + $(obj).parent('div').prev('label').text() + "'를 입력하세요.");
                         return;
                     }
                 }

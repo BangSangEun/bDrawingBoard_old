@@ -12,7 +12,7 @@ define(['jquery'],
              */
             this.saveLocalFile = function() {
                 location.href = (tool.getCanvas()).toDataURL('image/png').replace("image/png", "image/octet-stream");
-            }
+            };
 
             /**
              * 내 파일 저장 뷰
@@ -25,7 +25,7 @@ define(['jquery'],
                     $('#myfile-save').find('.modal-header > .close').trigger('click');
                     $('#filesave-name').val("");
                 }
-            }
+            };
 
             /**
              * 내 파일 저장
@@ -58,7 +58,7 @@ define(['jquery'],
                 }else {
                     alert("파일명을 입력하세요.");
                 }
-            }
+            };
 
             /**
              * 내 파일 목록 뷰
@@ -75,7 +75,7 @@ define(['jquery'],
                     $('#myfile-list .div-list-file table').find('tr').removeClass('click');
                     ($('#myfile-list .div-list-file table tbody')).html("");
                 }
-            }
+            };
 
             /**
              * 내 파일 목록 불러오기
@@ -113,7 +113,7 @@ define(['jquery'],
                         alert("파일 목록 조회 오류입니다.\n해당 오류가 지속되면 관리자에게 문의하세요.");
                     }
                 });
-            }
+            };
 
             /**
              * 내 파일 목록 이벤트

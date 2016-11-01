@@ -16,7 +16,7 @@ define(['jquery', 'model/Tool', 'handler/DrawingEventHandler', 'handler/FileEven
                 self.initCanvas();
                 self.initColorPicker();
                 self.initTool();
-            }
+            };
 
             /**
              * 이벤트 바인딩
@@ -49,7 +49,7 @@ define(['jquery', 'model/Tool', 'handler/DrawingEventHandler', 'handler/FileEven
                         drawingEventHandler.setHandler(self.tool, event);
                     });
                 }
-            }
+            };
 
             /**
              * 캔버스 초기화
@@ -58,7 +58,7 @@ define(['jquery', 'model/Tool', 'handler/DrawingEventHandler', 'handler/FileEven
             this.initCanvas = function() {
                 (self.tool.getCanvas()).width = $('.drawing-board').css('width').split('px')[0] - 2;
                 (self.tool.getCanvas()).height = $('.drawing-board').css('height').split('px')[0] - 2;
-            }
+            };
 
             /**
              * 툴 도구 초기화
@@ -72,7 +72,7 @@ define(['jquery', 'model/Tool', 'handler/DrawingEventHandler', 'handler/FileEven
                 self.tool.getPen().setSize($('.penSize-pallet:visible').find('select option:eq(0)').val());
                 self.tool.getPen().setBrush($('#brush-shape').find('select option:eq(0)').val());
                 self.tool.getPen().setFigure($('#figure-shape').find('select option:eq(0)').val());
-            }
+            };
 
             /**
              * 색상표 초기화
@@ -88,7 +88,7 @@ define(['jquery', 'model/Tool', 'handler/DrawingEventHandler', 'handler/FileEven
 
                 $('.color-pallet').append(colorPicker);
             }
-        }
+        };
 
         return Initializer;
 });

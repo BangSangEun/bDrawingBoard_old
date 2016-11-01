@@ -36,7 +36,7 @@ define(['jquery', '../model/Tool'],
                     self.eraserSelect();
 
                 }
-            }
+            };
 
             /**
              * 펜 사이즈 선택
@@ -44,7 +44,7 @@ define(['jquery', '../model/Tool'],
              */
             this.penSizeSelect = function(event) {
                 tool.getPen().setSize($(event.target).val());
-            }
+            };
 
             /**
              * 색상 선택
@@ -53,7 +53,7 @@ define(['jquery', '../model/Tool'],
             this.colorSelect = function(event) {
                 $(event.target).addClass('on');
                 tool.getPen().setColor($(event.target).css('background-color'));
-            }
+            };
 
             /**
              * 브러쉬 모양 선택
@@ -61,7 +61,7 @@ define(['jquery', '../model/Tool'],
              */
             this.brushSelect = function(event) {
                 tool.getPen().setBrush($(event.target).val());
-            }
+            };
 
             /**
              * 도형 모양 선택
@@ -71,14 +71,14 @@ define(['jquery', '../model/Tool'],
                 //var figureShape = $(event.target).val();
                 console.log($(event.target).val());
                 tool.getPen().setFigure($(event.target).val());
-            }
+            };
             
             /**
              * 새로그리기
              */
             this.cleaerCanvas = function () {
                 tool.getContext().clearRect(0,0, $(tool.getCanvas()).width(), $(tool.getCanvas()).height());
-            }
+            };
 
             /**
              * 지우개 선택
@@ -87,7 +87,7 @@ define(['jquery', '../model/Tool'],
             this.eraserSelect = function() {
                 tool.getPen().setColor('#fff');
                 tool.getPen().setBrush('square');
-            }
+            };
 
             /**
              * 선 그리기 이벤트
@@ -106,7 +106,7 @@ define(['jquery', '../model/Tool'],
                 tool.getContext().stroke();
 
                 tool.getPen().setOldPoint(null, tool.getPen().getNewPoint());
-            }
+            };
 
             /**
              * 도형 그리기 이벤트
@@ -159,7 +159,7 @@ define(['jquery', '../model/Tool'],
                 // 사각형 테두리
                 ctx.strokeRect(30, 30, 40, 40);
                 */
-            }
+            };
 
             /**
              * 캔바스 이벤트
@@ -216,7 +216,7 @@ define(['jquery', '../model/Tool'],
         var Point = function(event) {
             this.x = event.offsetX - $(event.target).position().left;
             this.y = event.offsetY - $(event.target).position().top;
-        }
+        };
 
         return drawingAction;
 });

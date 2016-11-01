@@ -14,27 +14,27 @@ define([],
 
             this.getCanvas = function() {
                 return document.getElementById("drawing-canvas");
-            }
+            };
 
             this.getContext = function() {
                 return self.getCanvas().getContext("2d");
-            }
+            };
 
             this.getMouseDown = function() {
                 return _mouseDown;
-            }
+            };
 
             this.setMouseDown = function(mouseDown) {
                 _mouseDown = mouseDown;
-            }
+            };
 
             this.getCurrent = function() {
                 return _current;
-            }
+            };
 
             this.setCurrent = function(current) {
                 _current = current;
-            }
+            };
 
             this.getColorArr = function() {
                 var colorArr = [ //색상표
@@ -53,11 +53,11 @@ define([],
                     '#CD426B'
                 ];
                 return colorArr;
-            }
+            };
 
             this.getPen = function() {
                 return _pen;
-            }
+            };
 
             this.setPen = function(pen) {
                 _pen = pen;
@@ -75,39 +75,39 @@ define([],
 
             this.getSize = function() {
                 return _size;
-            }
+            };
 
             this.setSize = function(size) {
                 _size = size;
-            }
+            };
 
             this.getColor = function() {
                 return _color;
-            }
+            };
 
             this.setColor = function(color) {
                 _color = color;
-            }
+            };
 
             this.getBrush = function() {
                 return _brush;
-            }
+            };
 
             this.setBrush = function(brush) {
                 _brush = brush;
-            }
+            };
 
             this.getFigure = function() {
                 return _figure;
-            }
+            };
 
             this.setFigure = function(figure) {
                 _figure = figure;
-            }
+            };
 
             this.getOldPoint = function() {
                 return _oldPoint;
-            }
+            };
 
             this.setOldPoint = function(event) {
                 if(event == null) {
@@ -117,11 +117,11 @@ define([],
                     _oldPoint.x = event.offsetX - $(event.target).position().left;
                     _oldPoint.y = event.offsetY - $(event.target).position().top;
                 }
-            }
+            };
 
             this.getNewPoint = function() {
                 return _newPoint;
-            }
+            };
 
             this.setNewPoint = function(event) {
                 if(event == null) {
@@ -131,15 +131,15 @@ define([],
                     _newPoint.x = event.offsetX - $(event.target).position().left;
                     _newPoint.y = event.offsetY - $(event.target).position().top;
                 }
-            }
+            };
 
             this.getEtc = function() {
                 return _etc;
-            }
+            };
 
             this.setEtc = function(etc) {
                 _etc = etc;
-            }
+            };
         };
 
         return Tool;

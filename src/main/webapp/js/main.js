@@ -39,7 +39,6 @@ require(['jquery', 'bootstrap', 'bootstrap_select', 'Initializer', 'LoginHandler
                 //초기화
                 var initializer = new Initializer();
                 initializer.init();
-                initializer.eventBinder();
 
                 //로그인 정보 - $.ajax 에서 json 으로 받는 형식과 같음
                 $.getJSON('/login/getMemberInfo.do', function (result) {

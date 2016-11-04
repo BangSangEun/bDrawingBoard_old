@@ -8,7 +8,6 @@ define([],
              * 캔바스 관련 변수
              */
             var self = this,
-                _mouseDown = false,
                 _current = null,
                 _pen = new Pen(),
                 _data = [];
@@ -21,39 +20,12 @@ define([],
                 return self.getCanvas().getContext("2d");
             };
 
-            this.getMouseDown = function() {
-                return _mouseDown;
-            };
-
-            this.setMouseDown = function(mouseDown) {
-                _mouseDown = mouseDown;
-            };
-
             this.getCurrent = function() {
                 return _current;
             };
 
             this.setCurrent = function(current) {
                 _current = current;
-            };
-
-            this.getColorArr = function() {
-                var colorArr = [ //색상표
-                    '#000000',
-                    '#CCCCCC',
-                    '#FFFFFF',
-                    '#ff0000',
-                    '#FF7F00',
-                    '#FFFF00',
-                    '#009900',
-                    '#082567',
-                    '#8000FF',
-                    '#FF7493',
-                    '#abeda6',
-                    '#b4dec1',
-                    '#CD426B'
-                ];
-                return colorArr;
             };
 
             this.getPen = function() {

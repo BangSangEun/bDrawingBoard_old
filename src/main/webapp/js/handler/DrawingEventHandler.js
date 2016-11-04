@@ -3,20 +3,34 @@
  */
 
 
-define(['jquery', '../action/DrawingAction'],
-    function($, DrawingAction) {
+define(['jquery', 'DrawingAction', 'GradientAction'],
+    function($, DrawingAction, GradientAction) {
         var DrawingEventHandler = function() {
+            var drawingAction, gradientAction;
+
+            /**
+             * 초기화
+             * @param tool
+             */
+            this.init = function(tool) {
+                drawingAction = new DrawingAction();
+                drawingAction.init(tool);
+                gradientAction = new GradientAction();
+                gradientAction.init(tool);
+            };
+
             /**
              * Drawing 핸들러
              * @param tool
              * @param event
              */
-            this.setHandler = function(tool, event) {
-                var drawingAction = new DrawingAction(tool);
-
+            this.setHandler = function(event) {
                 if(event.target.id == 'drawing-canvas') {
                     //캔바스 그리기 이벤트
                     drawingAction.canvasEvent(event);
+                }else if($(event.target).parents('div#gradient-option-view').length > 0) {
+                    //그라데이션 옵션 이벤트
+                    gradientAction.setHandler(event);
                 }else {
                     if(event.type == 'mousedown') {
                         if(event.target.id.indexOf('tool') > -1) {
@@ -41,6 +55,9 @@ define(['jquery', '../action/DrawingAction'],
                         }else if($(event.target).parents('div#figure-shape').length > 0) {
                             //도형 선택
                             drawingAction.figureSelect(event);
+                        }else if($(event.target).parents('div#paint-option').length > 0) {
+                            //채우기 선택
+                            drawingAction.paintOptionSelect(event);
                         }
                     }
                 }

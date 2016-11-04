@@ -13,6 +13,8 @@ require.config({
         DrawingEventHandler: 'handler/DrawingEventHandler',
         FileAction: 'action/FileAction',
         DrawingAction: 'action/DrawingAction',
+        GradientAction: 'action/GradientAction',
+        Util: 'util/Util',
         Member: 'model/Member',
         Tool: 'model/Tool',
         bootstrap: 'lib/bootstrap',
@@ -21,8 +23,8 @@ require.config({
 });
 
 
-require(['jquery', 'Initializer', 'LoginHandler', 'bootstrap', 'bootstrap_select'],
-    function($, Initializer, LoginHandler) {
+require(['jquery', 'bootstrap', 'bootstrap_select', 'Initializer', 'LoginHandler'],
+    function($, bootstrap, bootstrap_select, Initializer, LoginHandler) {
         $(document).ready(function() {
             var loginHandler = new LoginHandler();
             loginHandler.setHandler();

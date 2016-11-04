@@ -1,50 +1,8 @@
 /**
- * 툴 도구 객체
+ * Pen 객체
  */
-define(['Pen'],
-    function(Pen) {
-        var Tool = function() {
-            /**
-             * 캔바스 관련 변수
-             */
-            var self = this,
-                _current = null,
-                _pen = new Pen(),
-                _data = [];
-
-            this.getCanvas = function() {
-                return document.getElementById("drawing-canvas");
-            };
-
-            this.getContext = function() {
-                return self.getCanvas().getContext("2d");
-            };
-
-            this.getCurrent = function() {
-                return _current;
-            };
-
-            this.setCurrent = function(current) {
-                _current = current;
-            };
-
-            this.getPen = function() {
-                return _pen;
-            };
-
-            this.setPen = function(pen) {
-                _pen = pen;
-            };
-
-            this.getData = function () {
-                return _data;
-            };
-
-            this.setData = function(data) {
-                _data = data;
-            };
-        };
-
+define([],
+    function() {
         var Pen = function() {
             var _size,
                 _color,
@@ -52,8 +10,7 @@ define(['Pen'],
                 _figure,
                 _oldPoint = {x: null, y: null},
                 _newPoint = {x: null, y: null},
-                _imageData,
-                _etc;
+                _imageData;
 
             this.getSize = function() {
                 return _size;
@@ -122,15 +79,7 @@ define(['Pen'],
             this.setImageData = function (imageData) {
                 _imageData = imageData;
             };
-
-            this.getEtc = function() {
-                return _etc;
-            };
-
-            this.setEtc = function(etc) {
-                _etc = etc;
-            };
         };
 
-        return Tool;
+        return Pen;
 });

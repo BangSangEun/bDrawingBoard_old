@@ -6,21 +6,21 @@ define(['jquery', 'GradientAction'],
     function($, GradientAction) {
         var drawingAction = function() {
             var self = this;
+            var paintOption;
+            var isMouseDown;
+            var tempData; //임시 데이터
+            var gradientAction;
 
             this.tool;
-            this.isMouseDown;
-            this.paintOption;
-            this.gradientAction;
-            this.tempData; //임시 데이터
 
             /**
              * 초기화
              * @param tool
              */
             this.init = function(tool) {
-                self.gradientAction = new GradientAction();
+                gradientAction = new GradientAction();
                 self.tool = tool;
-                self.paintOption = $('#paint-option').find('.selectpicker option:eq(0)').attr('data-tokens');
+                paintOption = $('#paint-option').find('.selectpicker option:eq(0)').attr('data-tokens');
             };
 
             /**
@@ -69,7 +69,7 @@ define(['jquery', 'GradientAction'],
                         break;
                     case 'paint' :
                         $('#paint-option').show();
-                        if(self.paintOption == 'gradient') {
+                        if(paintOption == 'gradient') {
                             $('#gradient-option').show();
                         }
                         break;
@@ -172,7 +172,7 @@ define(['jquery', 'GradientAction'],
                     figureSize = arguments[1].figureSize;
                     lineWidth = arguments[1].lineWidth;
                     strokeStyle = arguments[1].strokeStyle;
-                    fillStyle = self.paintOption == 'single' ? self.tool.getPen().getColor() : arguments[1].fillStyle;
+                    fillStyle = paintOption == 'single' ? self.tool.getPen().getColor() : arguments[1].fillStyle;
                 }
 
                 self.tool.getContext().clearRect(0, 0, self.tool.getCanvas().width, self.tool.getCanvas().height);
@@ -210,7 +210,7 @@ define(['jquery', 'GradientAction'],
                     imageData: self.tool.getPen().getImageData()
                 };
                 //개체 임시 저장
-                self.tempData = figureData;
+                tempData = figureData;
 
                 return figureData;
             };
@@ -221,10 +221,10 @@ define(['jquery', 'GradientAction'],
              */
             this.paintOptionSelect = function(event) {
                 var option = $('#paint-option').find('.dropdown-menu').find('li.selected > a').attr('data-tokens');
-                self.paintOption = option;
-                if(self.paintOption == 'single') {
+                paintOption = option;
+                if(paintOption == 'single') {
                     $('#gradient-option').hide();
-                }else if(self.paintOption == 'gradient') {
+                }else if(paintOption == 'gradient') {
                     $('#gradient-option').show();
                     $('#gradient-option').find('button').on('click', function() {
                         $('#gradient-option-view').show();
@@ -239,15 +239,15 @@ define(['jquery', 'GradientAction'],
             this.paintEvent = function(event) {
                 //개체 선택
                 self.selectObjEvent(event);
-                var obj = self.tempData;
+                var obj = tempData;
 
                 //개체선택 해제
                 self.prevCanvasReturn();
 
                 if(obj.selectObj != undefined) {
-                    if(self.paintOption == 'gradient') {
-                        var gradientData = self.gradientAction.getGradientData(obj.selectObj.coordinate, obj.selectObj.figureSize);
-                        self.gradientAction.setGradientFillStyle(self.tool.getContext(), gradientData, obj.selectObj);
+                    if(paintOption == 'gradient') {
+                        var gradientData = gradientAction.getGradientData(obj.selectObj.coordinate, obj.selectObj.figureSize);
+                        gradientAction.setGradientFillStyle(self.tool.getContext(), gradientData, obj.selectObj);
                         obj.selectObj.fillStyle = self.tool.getContext().fillStyle;
                     }
 
@@ -299,11 +299,10 @@ define(['jquery', 'GradientAction'],
                         self.tool.getContext().stroke();
 
                         //개체 임시 저장
-                        self.tempData = {
+                        tempData = {
                             selectObj : data,
                             index : dataArr.length - 1 - index
                         };
-
                         return false;
                     }
                 });
@@ -331,7 +330,7 @@ define(['jquery', 'GradientAction'],
             this.canvasEvent = function(event) {
                 if (event.type == 'mousedown') {
                     if (event.button == 0) { // 마우스 왼쪽 버튼
-                        self.isMouseDown = true;
+                        isMouseDown = true;
                         switch(self.tool.getCurrent()) {
                             case 'pencil' :
                             case 'brush' :
@@ -351,19 +350,19 @@ define(['jquery', 'GradientAction'],
                         }
                     }
                 } else if (event.type == 'mouseup') {
-                    self.isMouseDown = false;
+                    isMouseDown = false;
                     if(self.tool.getCurrent() == 'figure') {
                         //도형 개체 저장
-                        self.tool.getData().push(self.tempData);
+                        self.tool.getData().push(tempData);
                     }
                     if(self.tool.getCurrent() != 'selectObj' && self.tool.getCurrent() != 'paint') {
                         self.tool.getPen().setImageData(self.tool.getContext().getImageData(0,0,self.tool.getCanvas().width,self.tool.getCanvas().height));
                     }
                     //console.log(self.tool.getData());
                 } else if (event.type == 'mouseover') {
-                    self.isMouseDown = false;
+                    isMouseDown = false;
                 } else if (event.type == 'mousemove') {
-                    if(self.isMouseDown) {
+                    if(isMouseDown) {
                         switch(self.tool.getCurrent()) {
                             case 'pencil' :
                             case 'brush' :

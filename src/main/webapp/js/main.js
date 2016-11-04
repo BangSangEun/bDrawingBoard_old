@@ -17,6 +17,7 @@ require.config({
         Util: 'util/Util',
         Member: 'model/Member',
         Tool: 'model/Tool',
+        Pen: 'model/Pen',
         bootstrap: 'lib/bootstrap',
         bootstrap_select: 'lib/bootstrap-select'
     }
@@ -45,8 +46,6 @@ require(['jquery', 'bootstrap', 'bootstrap_select', 'Initializer', 'LoginHandler
                     $('#top-memberInfo').text(decodeURIComponent(result['memberName']));
                 });
             }
-
-            $('.selectpicker').selectpicker();
         });
 });
 

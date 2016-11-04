@@ -54,7 +54,7 @@ define(['jquery', 'DrawingAction', 'GradientAction'],
                             //도형 선택
                             drawingAction.figureSelect(event);
                         }else if($(event.target).parents('div#paint-option').length > 0) {
-                            //채우기 선택
+                            //채우기 옵션 선택
                             drawingAction.paintOptionSelect(event);
                         }
                     }

@@ -146,15 +146,3 @@ define(['jquery'],
 
         return FileAction;
 });
-
-
-/*
- //로컬 다운로드
- location.href = initObj.canvas.toDataURL('image/png').replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Canvas.png');
-
- $('#save-canvas-img').attr("href", initObj.canvas.toDataURL('image/png'));
- $('#save-canvas-img').attr("download", "test");
- setTimeout(function() {
- $('#save-canvas-img').trigger("mousedown");
- }, 1000);
- */

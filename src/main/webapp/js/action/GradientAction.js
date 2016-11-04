@@ -6,19 +6,15 @@ define(['jquery', 'Util'],
     function($, Util) {
         var GradientAction = function() {
             var self = this;
-
-            this.tool;
-            this.isMouseDown;
-            this.breakpoint;
+            var isMouseDown;
+            var breakpoint;
 
             /**
              * 초기화
-             * @param tool
              */
-            this.init = function(tool) {
+            this.init = function() {
                 var util = new Util();
                 util.createColorPicker($('.gradient-color-pallet').find('.popover-content'));
-                self.tool = tool;
                 self.initBreakPoint();
             };
 
@@ -34,6 +30,8 @@ define(['jquery', 'Util'],
                     self.selectColor(this, $('.gradient-color-pallet').find('.popover-content').find('li:eq('+index+')'));  //색 초기화
                     pointColor[index] = $('.gradient-color-pallet').find('.popover-content').find('li:eq('+index+')').css('background-color');
                 });
+                breakpoint = $('.breakpoint')[0];
+                self.selectBreakPointEvent(breakpoint);
 
                 //중지점 bar 초기화
                 var canvas = document.getElementById("gradient-breakpoint-bar");
@@ -45,11 +43,10 @@ define(['jquery', 'Util'],
                     ]
                 };
 
-                this.setGradientFillStyle(context, gradientData, true);
-                context.fillRect(20,20,150,100);
+                console.log(gradientData);
 
-                self.breakpoint = $('.breakpoint')[0];
-                self.selectBreakPointEvent(self.breakpoint);
+                self.setGradientFillStyle(context, gradientData, true);
+                context.fillRect(20,20,150,100);
             };
 
 
@@ -71,7 +68,7 @@ define(['jquery', 'Util'],
                             }
                         }else if($(event.target).parent('.breakpoint').length > 0) {
                             //중지점 선택 이벤트
-                            self.isMouseDown = true;
+                            isMouseDown = true;
                             self.selectBreakPointEvent($(event.target).parent('.breakpoint'));
                         }else if(event.target.id == 'gradient-color'
                             || $(event.target).parent('#gradient-color').length > 0) {
@@ -86,16 +83,16 @@ define(['jquery', 'Util'],
                         }else if($(event.target).parents('.gradient-color-pallet').length > 0
                             && $(event.target).parent('ul').length > 0) {
                             //색 선택 이벤트
-                            self.selectColor(self.breakpoint, $(event.target));
+                            self.selectColor(breakpoint, $(event.target));
                         }
                     }
                 }else if(event.type == 'mouseup') {
-                    self.isMouseDown = false;
+                    isMouseDown = false;
                 }else if(event.type == 'mousemove') {
-                    if(self.isMouseDown) {
+                    if(isMouseDown) {
                         if(event.target.className == 'breakpoint-area') {
                             //중지점 이동 이벤트
-                            self.moveBreakPointEvent(event, self.breakpoint);
+                            self.moveBreakPointEvent(event, breakpoint);
                         }
                     }
                 }else if(event.type == 'change') {
@@ -144,7 +141,7 @@ define(['jquery', 'Util'],
 
                 if(isBreakPointBar || self.getType() == 'line') { //선형
                     gradient = context.createLinearGradient(startBreakPoint.x, startBreakPoint.y, endBreakPoint.x, endBreakPoint.y);
-                    $(gradientData.point).each(function() {
+                    $(point).each(function() {
                         gradient.addColorStop(this.position * 0.01, this.color); //addColorStop의 첫번째 값은 중지점 백분율 값
                     });
                 }else if(self.getType() == 'radial') { //방사형
@@ -273,16 +270,16 @@ define(['jquery', 'Util'],
              * @param breakpointObj : 중지점 개체
              */
             this.selectBreakPointEvent = function(breakpointObj) {
-                self.breakpoint = breakpointObj;
-                $('#gradient-position').val($(self.breakpoint).attr('gradient-position')); //위치 값
-                $('#gradient-color').find('p').css('background-color', $(self.breakpoint).attr('gradient-color')); //색 값
+                breakpoint = breakpointObj;
+                $('#gradient-position').val($(breakpoint).attr('gradient-position')); //위치 값
+                $('#gradient-color').find('p').css('background-color', $(breakpoint).attr('gradient-color')); //색 값
 
                 $('.breakpoint').find('i').removeClass('on');
                 $('.breakpoint').find('i').addClass('off');
 
                 //해당 breakpoint 개체 선택
-                $(self.breakpoint).find('i').removeClass('off');
-                $(self.breakpoint).find('i').addClass('on');
+                $(breakpoint).find('i').removeClass('off');
+                $(breakpoint).find('i').addClass('on');
             };
 
             /**

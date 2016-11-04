@@ -359,7 +359,7 @@ define(['jquery', 'GradientAction'],
                     if(self.tool.getCurrent() != 'selectObj' && self.tool.getCurrent() != 'paint') {
                         self.tool.getPen().setImageData(self.tool.getContext().getImageData(0,0,self.tool.getCanvas().width,self.tool.getCanvas().height));
                     }
-                    console.log(self.tool.getData());
+                    //console.log(self.tool.getData());
                 } else if (event.type == 'mouseover') {
                     self.isMouseDown = false;
                 } else if (event.type == 'mousemove') {

@@ -44,8 +44,6 @@ define(['jquery', 'DrawingAction', 'GradientAction'],
                             drawingAction.cleaerCanvas();
                         }
                     }else if(event.type == 'change') {
-                        console.log(event);
-
                         if($(event.target).parents('div#brush-shape').length > 0) {
                             //브러쉬 모양 선택
                             drawingAction.brushSelect(event);

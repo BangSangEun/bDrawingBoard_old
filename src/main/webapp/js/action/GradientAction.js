@@ -126,8 +126,6 @@ define(['jquery', 'Util'],
                 if(isBreakPointBar == 'breakbar' || self.getType() == 'line') { //선형
                     gradient = context.createLinearGradient(startBreakPoint.x, startBreakPoint.y, endBreakPoint.x, endBreakPoint.y);
                 }else if(self.getType() == 'radial') { //방사형
-                    console.log(startBreakPoint);
-                    console.log(endBreakPoint);
                     gradient = context.createRadialGradient(startBreakPoint.x, startBreakPoint.y, startBreakPoint.radius, endBreakPoint.x, endBreakPoint.y, endBreakPoint.radius);
                 }
 

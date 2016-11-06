@@ -11,6 +11,7 @@ require.config({
         LoginHandler: 'handler/LoginHandler',
         FileEventHandler: 'handler/FileEventHandler',
         DrawingEventHandler: 'handler/DrawingEventHandler',
+        LoginAction: 'action/LoginAction',
         FileAction: 'action/FileAction',
         DrawingAction: 'action/DrawingAction',
         GradientAction: 'action/GradientAction',

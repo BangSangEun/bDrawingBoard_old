@@ -14,7 +14,7 @@ define(['jquery', 'GradientAction'],
 
             /**
              * 초기화
-             * @param tool
+             * @param toolObj
              */
             this.init = function(toolObj) {
                 gradientAction = new GradientAction();
@@ -390,7 +390,6 @@ define(['jquery', 'GradientAction'],
                     if(tool.getCurrent() != 'selectObj' && tool.getCurrent() != 'paint') {
                         tool.getPen().setImageData(tool.getContext().getImageData(0,0,tool.getCanvas().width,tool.getCanvas().height));
                     }
-                    //console.log(tool.getData());
                 } else if (event.type == 'mouseover') {
                     isMouseDown = false;
                 } else if (event.type == 'mousemove') {

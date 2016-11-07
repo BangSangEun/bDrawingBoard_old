@@ -13,6 +13,7 @@ define(['jquery'],
              */
             this.saveLocalFile = function() {
                 location.href = (tool.getCanvas()).toDataURL('image/png').replace("image/png", "image/octet-stream");
+                console.log((tool.getCanvas()).toDataURL('image/png').replace("image/png", "image/octet-stream"));
             };
 
             /**
@@ -47,11 +48,11 @@ define(['jquery'],
              * 내 파일 저장
              * @param event
              */
-            this.myFileSave = function(event) { //값 체크
+            this.myFileSave = function(event) {
                 var file_name = $('#filesave-name').val();
 
                 if(file_name != "") {
-                    //file로 떨궈서 가져오도록
+                    //file로 떨궈서 가져오도록 수정해야 함. -- 수정필요
                     var file_url = (tool.getCanvas()).toDataURL('image/png').replace("image/png", "image/octet-stream");
 
                     $.ajax({

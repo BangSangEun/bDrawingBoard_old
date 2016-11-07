@@ -110,6 +110,23 @@ canvas {display: block; border:1px solid #B8B6B8;}
 .selectObj-ico {background-image: url("../image/icon/area_ico.png");}
 
 /* ---------- additional-tool icon */
+.shape_circle-ico {background-image: url("../image/icon/shape_circle.png");}
+.shape_square-ico {background-image: url("../image/icon/shape_square.png");}
+.shape_triangle-ico {background-image: url("../image/icon/shape_triangle.png");}
+
+.pen-size-ico {display: inline-block; background-repeat: no-repeat; width: 170px; height: 20px; background-size: 170px 10px; margin-top: 16px;}
+.pencil-1-ico {background-image: url("../image/icon/tool-ico/pencil-1.ico");}
+.pencil-2-ico {background-image: url("../image/icon/tool-ico/pencil-2.ico");}
+.pencil-3-ico {background-image: url("../image/icon/tool-ico/pencil-3.ico");}
+.pencil-4-ico {background-image: url("../image/icon/tool-ico/pencil-4.ico");}
+
+.brush-size-ico {display: inline-block; background-repeat: no-repeat; width: 170px; height: 30px; background-size: 170px 30px; margin-top: 6px;}
+.pencil-5-ico {background-image: url("../image/icon/tool-ico/pencil-5.ico");}
+.pencil-10-ico {background-image: url("../image/icon/tool-ico/pencil-10.ico");}
+.pencil-15-ico {background-image: url("../image/icon/tool-ico/pencil-15.ico");}
+.pencil-20-ico {background-image: url("../image/icon/tool-ico/pencil-20.ico");}
+
+.brush-squre-ico {background-image: url("../image/icon/tool-ico/brush-squre.ico");}
 
 
 /* ----------- menu icon */

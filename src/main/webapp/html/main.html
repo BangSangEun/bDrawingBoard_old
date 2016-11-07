@@ -23,7 +23,9 @@
         </ul>
     </div>
     <div class="logo">
-        <a href="/main.do">Drawing Board</a>
+        <div class="logobox">
+            <a href="/main.do">Drawing Board</a>
+        </div>
     </div>
     <div class="navi-menu">
         <ul class="navi-menu-left">
@@ -71,7 +73,7 @@
                 </div>
                 <!-- Footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default file-btn-close">닫기</button>
+                    <button type="button" class="btn btn-default file-btn-close" data-dismiss="modal">닫기</button>
                 </div>
             </div>
         </div>
@@ -129,11 +131,13 @@
                     <i class="tool-ico eraser-ico"></i> 지우개
                 </button>
             </li>
+            <!--
             <li>
                 <button type="button" class="btn btn-default" id="tool-text" disabled="disabled">
                     <i class="tool-ico text-ico"></i> 텍스트
                 </button>
             </li>
+            -->
             <li>
                 <button type="button" class="btn btn-default" id="tool-selectObj">
                     <i class="tool-ico selectObj-ico"></i> 개체선택

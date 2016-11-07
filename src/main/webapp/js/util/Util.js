@@ -29,7 +29,11 @@ define(['jquery'],
             this.createColorPicker = function(obj) {
                 var colorPicker = "<ul>";
                 for(var i=0; i<colorArr.length; i++) {
-                    colorPicker += "<li style='background-color:" + colorArr[i] + "'></li>";
+                    colorPicker += "<li style='background-color:" + colorArr[i] + "'";
+                    if(i == 0){
+                        colorPicker += " class='on'";
+                    }
+                    colorPicker += "></li>";
                 }
                 colorPicker += "</ul>";
 

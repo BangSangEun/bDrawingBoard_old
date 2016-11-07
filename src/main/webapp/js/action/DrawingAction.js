@@ -44,6 +44,7 @@ define(['jquery', 'GradientAction'],
 
                 self.prevCanvasReturn();
                 tool.getContext().setLineDash([]);
+                self.setCanvasCursor(tool.getCurrent());
 
                 switch(tool.getCurrent()) {
                     case 'pencil' :
@@ -77,6 +78,31 @@ define(['jquery', 'GradientAction'],
             };
 
             /**
+             * 선택 툴에 대한 커서 변경
+             * @param selectTool
+             */
+            this.setCanvasCursor = function(selectTool) {
+                var cursor;
+                if(selectTool == 'pencil') {
+                    cursor = 'url(/image/icon/cursor/pencil.cur) 4 12, auto';
+                }else if(selectTool == 'brush') {
+                    cursor = 'url(/image/icon/cursor/brush.cur) 4 12, auto';
+                }else if(selectTool == 'eraser') {
+                    cursor = 'url(/image/icon/eraser_ico.png) 4 12, auto';
+                }else if(selectTool == 'figure') {
+                    cursor = 'crosshair';
+                }else if(selectTool == 'paint') {
+                    cursor = 'url(/image/icon/paint_ico.png) 4 12, auto';
+                }else if(selectTool == 'selectObj') {
+                    cursor = 'move';
+                }else {
+                    cursor = 'default';
+                }
+
+                $(tool.getCanvas()).css('cursor', cursor);
+            };
+
+            /**
              * 펜 사이즈 선택
              * @param event
              */
@@ -89,8 +115,10 @@ define(['jquery', 'GradientAction'],
              * @param event
              */
             this.colorSelect = function(event) {
+                $(event.target).siblings('li').removeClass('on');
                 $(event.target).addClass('on');
                 tool.getPen().setColor($(event.target).css('background-color'));
+                console.log(tool.getPen().getColor());
             };
 
             /**
@@ -172,6 +200,9 @@ define(['jquery', 'GradientAction'],
                     figureSize = arguments[1].figureSize;
                     lineWidth = arguments[1].lineWidth;
                     strokeStyle = arguments[1].strokeStyle;
+                    if(tool.getPen().getColor() == undefined) {
+                        tool.getPen().setColor($('.color-pallet').find('li.on').css('background-color'));
+                    }
                     fillStyle = paintOption == 'single' ? tool.getPen().getColor() : arguments[1].fillStyle;
                 }
 
@@ -209,6 +240,7 @@ define(['jquery', 'GradientAction'],
                     fillStyle : tool.getContext().fillStyle == undefined ? null : tool.getContext().fillStyle,   //채우기 색상
                     imageData: tool.getPen().getImageData()
                 };
+
                 //개체 임시 저장
                 tempData = figureData;
 

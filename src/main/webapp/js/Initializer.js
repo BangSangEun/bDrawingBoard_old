@@ -19,7 +19,7 @@ define(['jquery', 'Tool', 'Util', 'DrawingEventHandler', 'FileEventHandler'],
                 var util = new Util();
                 util.createColorPicker($('.color-pallet'));
                 self.eventBinder();
-                //testtest
+                //testtest--------
                 $('.selectpicker').selectpicker();
             };
 

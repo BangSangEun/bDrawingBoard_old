@@ -8,6 +8,7 @@ public class MyFileInfoVO {
     private String member_id;
     private String file_name;
     private String file_url;
+    private String file_data;
     private String regi_date;
 
     public int getFile_id() {
@@ -40,6 +41,14 @@ public class MyFileInfoVO {
 
     public void setFile_url(String file_url) {
         this.file_url = file_url;
+    }
+
+    public String getFile_data() {
+        return file_data;
+    }
+
+    public void setFile_data(String file_data) {
+        this.file_data = file_data;
     }
 
     public String getRegi_date() {

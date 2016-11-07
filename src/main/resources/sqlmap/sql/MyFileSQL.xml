@@ -33,7 +33,7 @@
 			,#{member_id}
 			,#{file_name}
 			,#{file_url}
-			,''
+			,#{file_data}
 			,formatdatetime(now(),'yyyy-MM-dd/HH:mm:ss')
 		)
 	</insert>

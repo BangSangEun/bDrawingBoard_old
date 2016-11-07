@@ -392,6 +392,8 @@ define(['jquery', 'Util'],
                 var color = $(obj).css('background-color');
                 $(breakpoint).attr('gradient-color', color);
                 $('#gradient-color').find('p').css('background-color', color);
+                $(obj).siblings('li').removeClass('on');
+                $(obj).addClass('on');
             };
 
         };

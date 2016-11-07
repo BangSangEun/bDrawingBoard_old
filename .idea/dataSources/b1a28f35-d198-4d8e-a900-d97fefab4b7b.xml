@@ -809,6 +809,7 @@
       <data-type>INTEGER(10)|4</data-type>
     </column>
     <column id="291" parent="33" name="MEMBER_ID">
+      <mandatory>1</mandatory>
       <data-type>VARCHAR(50)|12</data-type>
     </column>
     <column id="292" parent="33" name="MEMBER_PW">
@@ -823,24 +824,31 @@
     <column id="295" parent="33" name="USE_YN">
       <data-type>VARCHAR(1)|12</data-type>
     </column>
-    <column id="296" parent="34" name="FILE_ID">
+    <key id="296" parent="33" name="MEMBER_MEMBER_ID_PK">
+      <columns>MEMBER_ID</columns>
+      <primary>1</primary>
+    </key>
+    <column id="297" parent="34" name="FILE_ID">
       <mandatory>1</mandatory>
       <data-type>BIGINT(19)|-5</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="297" parent="34" name="MEMBER_ID">
+    <column id="298" parent="34" name="MEMBER_ID">
       <data-type>VARCHAR(50)|12</data-type>
     </column>
-    <column id="298" parent="34" name="FILE_NAME">
+    <column id="299" parent="34" name="FILE_NAME">
       <data-type>VARCHAR(100)|12</data-type>
     </column>
-    <column id="299" parent="34" name="FILE_URL">
+    <column id="300" parent="34" name="FILE_URL">
       <data-type>CLOB(max)|2005</data-type>
     </column>
-    <column id="300" parent="34" name="REGI_DATE">
+    <column id="301" parent="34" name="FILE_DATA">
+      <data-type>CLOB(max)|2005</data-type>
+    </column>
+    <column id="302" parent="34" name="REGI_DATE">
       <data-type>VARCHAR(20)|12</data-type>
     </column>
-    <key id="301" parent="34" name="MYFILE_INFO_FILE_ID_PK">
+    <key id="303" parent="34" name="MYFILE_INFO_FILE_ID_PK">
       <columns>FILE_ID</columns>
       <primary>1</primary>
     </key>

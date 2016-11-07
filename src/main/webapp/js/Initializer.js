@@ -29,8 +29,7 @@ define(['jquery', 'Tool', 'Util', 'DrawingEventHandler', 'FileEventHandler'],
             this.eventBinder = function() {
                     //======================================= file
                 var file_menu = $(".navi-menu").find("[id^=menu-]"),
-                    myfile_save_btn = $('#myfile-save-btn'),
-                    myfile_list_exit = $('.file-view .modal-footer').find('.file-btn-close'),
+                    myfile_save_btn = $('#myfile-save-btn');
                     //======================================= drawing
                     drawing_tool = $(".drawing-tool").find('li').find('button'),
                     drawing_canvas = $("#drawing-canvas"), /* canvas board */
@@ -39,7 +38,7 @@ define(['jquery', 'Tool', 'Util', 'DrawingEventHandler', 'FileEventHandler'],
                     drawclear = $("#menu-drawClear"), /* clear */
                     gradient_option = $('#gradient-option'); /* 그라데이션 옵션 메뉴 */
 
-                var fileEventObj = [file_menu, myfile_save_btn, myfile_list_exit];
+                var fileEventObj = [file_menu, myfile_save_btn];
                 var drawEventObj = [drawing_tool, drawing_canvas, pallet_tool_color, pallet_tool, drawclear, gradient_option];
 
                 var fileEventHandler = new FileEventHandler();

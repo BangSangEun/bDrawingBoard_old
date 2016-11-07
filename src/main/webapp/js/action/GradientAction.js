@@ -72,6 +72,7 @@ define(['jquery', 'Util'],
                         var type = self.getType();
                         $('#gradient-direction').find('div[id$=direction]').hide();
                         if(type == 'line') {
+                            $('#gradient-degree').removeAttr('disabled');
                             $('#line-direction').show();
                         }else if(type == 'radial') {
                             $('#gradient-degree').attr('disabled', 'disabled');

@@ -13,6 +13,10 @@ define(['jquery', 'FileAction'],
              */
             this.init = function(tool) {
                 fileAction = new FileAction(tool);
+
+                $('#myfile-list').on('hide.bs.modal', function () {
+                    fileAction.myFileListView(false);
+                });
             };
 
             /**
@@ -21,29 +25,22 @@ define(['jquery', 'FileAction'],
              * @param event
              */
             this.setHandler = function(event) {
-                if($(event.target).parents('div#myfile-list').length > 0) {
-                    //내 파일 목록 뷰 이벤트
-                    if(event.type == 'mousedown') {
-                        if(event.target.className.indexOf('file-btn-close') > -1) {
-                            fileAction.myFileListView(false);
-                        }
-                    }
-                }else if($(event.target).parents('div#myfile-save').length > 0) {
-                    //내 파일 저장 이벤트
-                    if(event.type == 'mousedown') {
-                        if(event.target.id == 'myfile-save-btn') {
+                //내 파일 저장 뷰 이벤트
+                if($(event.target).parents('#myfile-save').length > 0) {
+                    if (event.type == 'mousedown') {
+                        if (event.target.id == 'myfile-save-btn') {
                             fileAction.myFileSave(event);
                         }
                     }
-                }else {
+                }else if(event.target.id.indexOf('menu-') > -1) {
                     if (event.type == 'mousedown') {
-                        if(event.target.id == 'menu-saveLocal') {
+                        if (event.target.id == 'menu-saveLocal') {
                             //로컬 파일 저장
                             fileAction.saveLocalFile();
-                        }else if(event.target.id == 'menu-saveFile') {
+                        } else if (event.target.id == 'menu-saveFile') {
                             //내 파일 저장 뷰
                             fileAction.myFileSaveView(true);
-                        }else if(event.target.id == 'menu-myFileList') {
+                        } else if (event.target.id == 'menu-myFileList') {
                             //내 파일 목록 뷰
                             fileAction.myFileListView(true);
                         }

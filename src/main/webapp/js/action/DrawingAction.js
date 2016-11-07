@@ -40,6 +40,7 @@ define(['jquery', 'GradientAction'],
                 $('#paint-option').hide();
                 $('#gradient-option').hide();
                 $('#gradient-option-view').hide();
+                $('#gradient-color-pallet').hide();
 
                 self.prevCanvasReturn();
                 tool.getContext().setLineDash([]);

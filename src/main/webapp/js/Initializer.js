@@ -24,7 +24,7 @@ define(['jquery', 'Tool', 'Util', 'DrawingEventHandler', 'FileEventHandler'],
             };
 
             /**
-             * 이벤트 바인딩adfasdf
+             * 이벤트 바인딩asdwwwwwww
              */
             this.eventBinder = function() {
                     //======================================= file

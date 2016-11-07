@@ -6,6 +6,7 @@ define(['jquery'],
     function($) {
         var FileAction = function(tool) {
             var self = this;
+            var fileData = {};
 
             /**
              * 로컬 파일 다운로드
@@ -22,8 +23,23 @@ define(['jquery'],
                 if(view) {
                     $('#myfile-save').modal();
                 }else {
-                    $('#myfile-save').find('.modal-header > .close').trigger('click');
+                    $('#myfile-save').modal('hide');
                     $('#filesave-name').val("");
+                }
+            };
+
+            /**
+             * 내 파일 목록 뷰
+             * @param view
+             */
+            this.myFileListView = function(view) {
+                if(view) {
+                    $('#myfile-list').modal();
+                    self.myFileListRead();
+                }else {
+                    $('#myfile-list .div-list-file table').find('tr').removeClass('on');
+                    $('#myfile-list .div-list-file table').find('tr').removeClass('click');
+                    ($('#myfile-list .div-list-file table tbody')).html("");
                 }
             };
 
@@ -35,17 +51,17 @@ define(['jquery'],
                 var file_name = $('#filesave-name').val();
 
                 if(file_name != "") {
-                    var save_img = tool.getCanvas().toDataURL('image/png', 1.0);
+                    //file로 떨궈서 가져오도록
+                    var file_url = (tool.getCanvas()).toDataURL('image/png').replace("image/png", "image/octet-stream");
 
                     $.ajax({
                         type: 'POST',
                         url: '/setMyFileInfo.do',
-                        data: {"file_name": file_name, "save_img": save_img},
+                        data: {"file_name": file_name, "file_url": file_url, "file_data": tool.getData()},
                         dataType: 'text',
                         success: function(result) {
                             if(result == 'success') {
                                 alert("파일 저장 완료");
-                                $('#myfile-save').modal();
                                 self.myFileSaveView(false);
                             }else {
                                 alert("파일 저장 실패");
@@ -61,34 +77,17 @@ define(['jquery'],
             };
 
             /**
-             * 내 파일 목록 뷰
-             * @param view
-             */
-            this.myFileListView = function(view) {
-                if(view) {
-                    $('#myfile-list').modal();
-                    self.myFileListRead();
-                }else {
-                    $('#myfile-list').find('.modal-header > .close').trigger('click');
-
-                    $('#myfile-list .div-list-file table').find('tr').removeClass('on');
-                    $('#myfile-list .div-list-file table').find('tr').removeClass('click');
-                    ($('#myfile-list .div-list-file table tbody')).html("");
-                }
-            };
-
-            /**
              * 내 파일 목록 불러오기
              */
             this.myFileListRead = function() {
                 $.ajax({
-                    type: 'POST',
+                    type: 'GET',
                     url: '/getMyFileInfoList.do',
-                    data: {"file_type": ""},
                     dataType: 'json',
                     success: function(result) {
                         var appendHtml = "";
                         var listObj = result.myFileInfoList;
+                        console.log(listObj);
                         for(var i=0; i<listObj.length; i++) {
                             appendHtml += "<tr class=\"list-file\">";
                             appendHtml += "<td class=\"depth-0\" id=\"td-file-" + listObj[i].file_id + "\">";
@@ -99,6 +98,11 @@ define(['jquery'],
                             appendHtml += "<a><i class=\"tool-ico editname-ico\"></i></a>"; // <!-- 이름변경 -->
                             appendHtml += "<a><i class=\"tool-ico drawclear-black-ico\"></i></a>"; // <!-- 삭제 -->
                             appendHtml += "</div></td></tr>";
+
+                            fileData[listObj[i].file_id] = {
+                                data : listObj[i].file_data,
+                                imgUrl : listObj[i].file_url
+                            };
                         }
 
                         $('#myfile-list .div-list-file').find('tbody').append(appendHtml);
@@ -121,14 +125,23 @@ define(['jquery'],
              */
             this.myFileListEvent = function(event) {
                 if(event.type == 'mousedown') {
+                    var fileDataIndex = $(event.target).parents('td').attr('id') == undefined ? $(event.target).attr('id').split('td-file-')[1] : $(event.target).parents('td').attr('id').split('td-file-')[1];
                     console.log(event);
 
                     if(event.target.tagName == 'P' || event.target.tagName == 'TD') {
+                        // 파일 불러오기
                         $('#myfile-list').find('tr.click').removeClass('click');
                         $(event.currentTarget).addClass('click');
+
+                        var img = new Image();
+                        img.src = fileData[fileDataIndex].imgUrl;
+                        img.onload = function() {
+                            tool.getContext().drawImage(img, 0, 0);
+                        };
+                        $('#myfile-list').modal('hide');
                     }else if(event.target.className.indexOf("savelocal") > -1) {
                         // 파일 다운로드
-
+                        location.href = fileData[fileDataIndex].imgUrl;
                     }else if(event.target.className.indexOf("editname") > -1) {
                         // 파일 이름변경
 

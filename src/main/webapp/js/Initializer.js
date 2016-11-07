@@ -77,22 +77,8 @@ define(['jquery', 'Tool', 'Util', 'DrawingEventHandler', 'FileEventHandler'],
                 tool.getPen().setSize($('.penSize-pallet:visible').find('select option:eq(0)').val());
                 tool.getPen().setBrush($('#brush-shape').find('select option:eq(0)').val());
                 tool.getPen().setFigure($('#figure-shape').find('select option:eq(0)').val());
+                $(tool.getCanvas()).css('cursor', 'url(/image/icon/cursor/pencil.cur) 4 12, auto');
             };
-
-            /**
-             * 색상표 초기화
-             * @param obj
-             */
-            this.initColorPicker = function(obj) {
-                var colorArr = tool.getColorArr();
-                var colorPicker = "<ul>";
-                for(var i=0; i<colorArr.length; i++) {
-                    colorPicker += "<li style='background-color:" + colorArr[i] + "'></li>";
-                }
-                colorPicker += "</ul>";
-
-                obj.append(colorPicker);
-            }
         };
 
         return Initializer;
